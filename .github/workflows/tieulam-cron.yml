@@ -7,9 +7,6 @@ on:
   # 2. Cho phép bạn bấm nút chạy bằng tay trên giao diện GitHub
   workflow_dispatch:
 
-  # 3. Cho phép kích hoạt chạy từ bên ngoài thông qua URL API (Dành cho cron-job.org)
-  repository_dispatch:
-    types: [trigger_tieulam_bot]
 
 jobs:
   scrape_and_update:

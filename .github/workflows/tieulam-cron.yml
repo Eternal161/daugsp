@@ -1,17 +1,12 @@
 name: Auto Scrape Tieu Lam TV
-
 on:
   repository_dispatch:
     types: [cron-trigger]
-    
-  # 2. Cho phép bạn bấm nút chạy bằng tay trên giao diện GitHub
   workflow_dispatch:
-
 
 jobs:
   scrape_and_update:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout mã nguồn
       uses: actions/checkout@v4
@@ -21,22 +16,16 @@ jobs:
       with:
         python-version: '3.10'
 
-    # 💡 TUYỆT CHIÊU: BẬT VPN CLOUDFLARE WARP ĐỂ CHE DẤU IP GITHUB
-    - name: Bật VPN Cloudflare WARP
-      uses: fscarmen/warp-on-actions@v1.1
-
-    - name: Cài đặt các thư viện cần thiết
+    - name: Cài đặt thư viện
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Cài đặt trình duyệt ẩn danh Playwright
-      run: |
-        playwright install chromium
-
-    - name: Kích hoạt con bot đi săn m3u8 và đẩy dữ liệu
+    - name: Chạy bot cào M3U8
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         GH_REPO: ${{ github.repository }}
+        WORKER_URL: ${{ secrets.WORKER_URL }}
+        WORKER_SECRET: ${{ secrets.WORKER_SECRET }}
       run: |
-        python tieulam.py
+        python tieulam.pý

@@ -47,7 +47,7 @@ def get_final_logo(team_name: str, site_logo: str) -> str:
 # Worker forward POST request đến API, bypass IP block
 # =========================================================
 def relay_post(target_url: str, body: dict) -> dict:
-content = open('tieulam.py', 'r', encoding='utf-8').read()
+
 
 old = '''def relay_post(target_url: str, body: dict) -> dict:
     """Gọi API qua Cloudflare Worker relay (IP HKG/Singapore)"""

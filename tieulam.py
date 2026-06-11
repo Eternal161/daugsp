@@ -10,7 +10,7 @@ from github import Github
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 from playwright_stealth import Stealth
 
-# =========================================================
+# =========================================================F
 # CONFIG TIẾU LÂM TV - BẢN V7: CHỐNG ẢO GIÁC CSS & CUỘN TRANG
 # =========================================================
 TARGET_SITE   = "https://sv1.tieulam1.live/trang-chu?type=football"
@@ -197,7 +197,7 @@ def scrape_and_push():
     print(f"🚀 BẮT ĐẦU BOT TIẾU LÂM TV (Giờ VN): {now_str}")
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, args=["--no-sandbox", "--disable-setuid-sandbox"])
+        browser = p.chromium.launch(headless=True, args=["--no-sandbox", "--disable-setuid-sandbox"])
         context = browser.new_context(viewport={"width": 1920, "height": 1080}, user_agent=_HEADERS["User-Agent"], timezone_id="Asia/Ho_Chi_Minh")
         page = context.new_page()
         try: Stealth().apply_stealth_sync(page)

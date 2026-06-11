@@ -47,32 +47,6 @@ def get_final_logo(team_name: str, site_logo: str) -> str:
 # Worker forward POST request đến API, bypass IP block
 # =========================================================
 def relay_post(target_url: str, body: dict) -> dict:
-
-
-old = '''def relay_post(target_url: str, body: dict) -> dict:
-    """Gọi API qua Cloudflare Worker relay (IP HKG/Singapore)"""
-    import urllib.parse
-
-    # Build URL thủ công để tránh double-encode
-    worker_url = (
-        f"{WORKER_URL}"
-        f"?secret={urllib.parse.quote(WORKER_SECRET, safe='')}"
-        f"&method=POST"
-        f"&url={urllib.parse.quote(target_url, safe='')}"
-    )
-
-    body_str = json.dumps(body)
-
-    resp = requests.post(
-        worker_url,
-        data=body_str,          # dùng data= thay vì json= để tránh double-serialize
-        timeout=20,
-        headers={"Content-Type": "application/json"}
-    )
-    resp.raise_for_status()
-    return resp.json()'''
-
-new = '''def relay_post(target_url: str, body: dict) -> dict:
     """Gọi API qua Cloudflare Worker relay (IP HKG/Singapore)"""
     import urllib.parse
     import base64
@@ -91,16 +65,7 @@ new = '''def relay_post(target_url: str, body: dict) -> dict:
 
     resp = requests.get(worker_url, timeout=20)
     resp.raise_for_status()
-    return resp.json()'''
-
-if old in content:
-    content = content.replace(old, new)
-    open('tieulam.py', 'w', encoding='utf-8').write(content)
-    print("Done")
-else:
-    print("NOT FOUND - showing current relay_post:")
-    start = content.find('def relay_post')
-    print(content[start:start+600])
+    return resp.json()
 
 # =========================================================
 # LẤY DANH SÁCH TRẬN LIVE TỪ API

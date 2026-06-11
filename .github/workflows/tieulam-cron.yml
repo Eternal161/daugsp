@@ -28,4 +28,4 @@ jobs:
         WORKER_URL: ${{ secrets.WORKER_URL }}
         WORKER_SECRET: ${{ secrets.WORKER_SECRET }}
       run: |
-        python tieulam.pý
+        python tieulam.py

@@ -11,7 +11,7 @@ from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 from playwright_stealth import Stealth
 
 # =========================================================
-# CONFIG TIẾU LÂM TV - BẢN V6: ÉP CHỜ LOAD & NHẬN DIỆN CẤU TRÚC
+# CONFIG TIẾU LÂM TV - BẢN V7: CHỐNG ẢO GIÁC CSS & CUỘN TRANG
 # =========================================================
 TARGET_SITE   = "https://sv1.tieulam1.live/trang-chu?type=football"
 BASE_URL      = "https://sv1.tieulam1.live"
@@ -39,7 +39,7 @@ def get_final_logo(team_name: str, site_logo: str) -> str:
     return f"https://ui-avatars.com/api/?name={initials}&size=200&background=1565C0&color=ffffff&bold=true"
 
 # =========================================================
-# 💡 JS: BÓC TÁCH DỰA TRÊN CẤU TRÚC CỘT (KHÔNG DÙNG CLASS)
+# 💡 JS: BÓC TÁCH KẾT HỢP ALT ẢNH + CẤU TRÚC LƯỚI
 # =========================================================
 JS_EXTRACT = """
 () => {
@@ -53,7 +53,7 @@ JS_EXTRACT = """
         const href = a.href;
         if (seen.has(href)) continue;
 
-        // 💡 TÌM GRID BẰNG CẤU TRÚC: Hộp nào có đúng 3 cột và chứa ít nhất 2 ảnh
+        // 1. Tìm đúng cấu trúc lưới 3 ngăn của các trận đấu (Bỏ qua Banner)
         let gridBox = null;
         for (let div of a.querySelectorAll('div')) {
             if (div.children.length === 3 && div.querySelectorAll('img').length >= 2) {
@@ -62,39 +62,43 @@ JS_EXTRACT = """
             }
         }
         
-        // Nếu không tìm thấy cấu trúc 3 cột -> Nó là Banner -> Bỏ qua
         if (!gridBox) continue;
-
         seen.add(href);
 
-        // 1. Tên Giải Đấu (Lấy thẻ text đầu tiên trong khối trận)
+        // 2. Tìm Tên Giải Đấu (Nắm text đầu tiên của khối thẻ)
         let tournament = 'Tiếu Lâm Live';
-        const spans = Array.from(a.querySelectorAll('span, p'));
-        if (spans.length > 0) {
-            const firstText = clean(spans[0].innerText);
-            if (firstText && firstText.length > 2) tournament = firstText;
+        const texts = Array.from(a.querySelectorAll('span, p')).map(e => clean(e.innerText)).filter(t => t.length > 2);
+        if (texts.length > 0) {
+            tournament = texts[0];
         }
 
-        // 2. Tách 3 cột
         const homeCol = gridBox.children[0];
         const centerCol = gridBox.children[1];
         const awayCol = gridBox.children[2];
 
-        // Lấy Tên Đội
-        const homeTextEls = Array.from(homeCol.querySelectorAll('span, p')).map(e => clean(e.innerText)).filter(t => t);
-        const awayTextEls = Array.from(awayCol.querySelectorAll('span, p')).map(e => clean(e.innerText)).filter(t => t);
-        const home = homeTextEls.length ? homeTextEls[homeTextEls.length - 1] : 'Đội nhà';
-        const away = awayTextEls.length ? awayTextEls[awayTextEls.length - 1] : 'Đội khách';
-
-        // Lấy Logo
+        // 3. Lấy Logo và Tên đội (Tuyệt chiêu dùng thuộc tính alt của ảnh)
         const homeImg = homeCol.querySelector('img');
         const awayImg = awayCol.querySelector('img');
         const homeLogo = homeImg ? homeImg.src : '';
         const awayLogo = awayImg ? awayImg.src : '';
+        
+        let home = homeImg && homeImg.alt ? clean(homeImg.alt) : '';
+        let away = awayImg && awayImg.alt ? clean(awayImg.alt) : '';
 
-        // 3. Thời gian & Tỉ số
+        // Nếu web lười không gắn alt, ta vét chữ từ dưới lên
+        if (!home || home === 'Đội nhà') {
+            const hTexts = Array.from(homeCol.querySelectorAll('span, p')).map(e => clean(e.innerText)).filter(t => t);
+            if (hTexts.length) home = hTexts[hTexts.length - 1];
+            else home = 'Đội nhà';
+        }
+        if (!away || away === 'Đội khách') {
+            const aTexts = Array.from(awayCol.querySelectorAll('span, p')).map(e => clean(e.innerText)).filter(t => t);
+            if (aTexts.length) away = aTexts[aTexts.length - 1];
+            else away = 'Đội khách';
+        }
+
+        // 4. Thời gian và tỉ số
         let timeStr = clean(centerCol.innerText).replace(/\\n/g, ' ');
-
         const isLive = /live|trực tiếp|đang phát/.test((a.innerText || '').toLowerCase()) || timeStr.includes('-');
 
         if (timeStr.toLowerCase().includes('sắp diễn ra')) {
@@ -203,13 +207,18 @@ def scrape_and_push():
             print(f"📺 Đang mở trang chủ Tiếu Lâm...")
             page.goto(TARGET_SITE, wait_until="domcontentloaded", timeout=60000)
             
-            # 💡 QUAN TRỌNG: Ép bot phải đợi đến khi danh sách trận đấu render ra màn hình
+            # 💡 BÍ QUYẾT 1: Ép bot cuộn chuột để đánh thức giao diện (Lazy Loading)
+            for _ in range(5):
+                page.mouse.wheel(0, 800)
+                page.wait_for_timeout(1000)
+            
             print("⏳ Đang chờ hệ thống tải danh sách các trận đấu...")
-            page.wait_for_selector('a[href*="/truc-tiep/"]', state="visible", timeout=20000)
-            page.wait_for_timeout(3000) # Nghỉ thêm 3s cho chắc ăn
+            # 💡 BÍ QUYẾT 2: Đổi sang state="attached", không quan tâm thẻ có bị CSS che khuất hay không
+            page.wait_for_selector('a[href*="/truc-tiep/"]', state="attached", timeout=15000)
+            page.wait_for_timeout(2000) 
             
         except PWTimeout:
-            print("   ⚠️ Web load chậm hoặc hiện tại không có trận đấu nào trên lịch!")
+            print("   ⚠️ Lỗi Timeout: Có thể bị Cloudflare chặn IP hoặc không có trận nào!")
         except Exception as e:
             print(f"   ⚠️ Có sự cố mạng: {e}")
             

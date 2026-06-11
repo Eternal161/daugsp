@@ -1,0 +1,331 @@
+{
+  "id": "tieulam",
+  "name": "Tiếu Lâm TV",
+  "last_updated": "16:46 11/06/2026",
+  "groups": [
+    {
+      "id": "live",
+      "name": "🔴 Live bóng đá",
+      "channels": [
+        {
+          "id": "match-e060545b",
+          "name": "⚽ Đội nhà vs Đội khách | Live 0 - 0 16:46 11/06/2026",
+          "tournament": "Tiếu Lâm Live",
+          "logo_nha": "https://media.api-sports.io/football/teams/19155.png",
+          "logo_khach": "https://media.api-sports.io/football/teams/19148.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://media.api-sports.io/football/teams/19155.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "match-e060545b",
+              "name": "Tiếu Lâm",
+              "contents": [
+                {
+                  "id": "match-e060545b",
+                  "name": "Đội nhà vs Đội khách",
+                  "streams": [
+                    {
+                      "id": "match-e060545b",
+                      "name": "F",
+                      "stream_links": [
+                        {
+                          "id": "lnk-a312bdfc",
+                          "name": "Trực Tiếp 1",
+                          "type": "hls",
+                          "default": true,
+                          "url": "https://pull.asynccdn.xyz/live/3ea090ebabd84739b6a59498f1de986e/index.m3u8"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "match-08f82665",
+          "name": "⚽ Đội nhà vs Đội khách | Live 0 - 0 16:46 11/06/2026",
+          "tournament": "Tiếu Lâm Live",
+          "logo_nha": "https://media.api-sports.io/football/teams/19155.png",
+          "logo_khach": "https://media.api-sports.io/football/teams/19148.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://media.api-sports.io/football/teams/19155.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "match-08f82665",
+              "name": "Tiếu Lâm",
+              "contents": [
+                {
+                  "id": "match-08f82665",
+                  "name": "Đội nhà vs Đội khách",
+                  "streams": [
+                    {
+                      "id": "match-08f82665",
+                      "name": "F",
+                      "stream_links": [
+                        {
+                          "id": "lnk-834b182b",
+                          "name": "Trực Tiếp 1",
+                          "type": "hls",
+                          "default": true,
+                          "url": "https://station1-global.vsc100.com/live/77b27bb09b4096a42492f79c4c0a5c96/playlist.m3u8"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "match-8f873655",
+          "name": "⚽ Đội nhà vs Đội khách | Live 0 - 0 16:46 11/06/2026",
+          "tournament": "Tiếu Lâm Live",
+          "logo_nha": "https://media.api-sports.io/football/teams/19155.png",
+          "logo_khach": "https://media.api-sports.io/football/teams/19148.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://media.api-sports.io/football/teams/19155.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "match-8f873655",
+              "name": "Tiếu Lâm",
+              "contents": [
+                {
+                  "id": "match-8f873655",
+                  "name": "Đội nhà vs Đội khách",
+                  "streams": [
+                    {
+                      "id": "match-8f873655",
+                      "name": "F",
+                      "stream_links": [
+                        {
+                          "id": "lnk-cfc3d6c6",
+                          "name": "Trực Tiếp 1",
+                          "type": "hls",
+                          "default": true,
+                          "url": "https://station1-global.vsc100.com/live/bde4c9f160647f7845c6d63a809dbef4/playlist.m3u8"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "match-5d581a27",
+          "name": "⚽ Đội nhà vs Đội khách | Live 0 - 0 16:46 11/06/2026",
+          "tournament": "Tiếu Lâm Live",
+          "logo_nha": "https://media.api-sports.io/football/teams/19155.png",
+          "logo_khach": "https://media.api-sports.io/football/teams/19148.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://media.api-sports.io/football/teams/19155.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "match-5d581a27",
+              "name": "Tiếu Lâm",
+              "contents": [
+                {
+                  "id": "match-5d581a27",
+                  "name": "Đội nhà vs Đội khách",
+                  "streams": [
+                    {
+                      "id": "match-5d581a27",
+                      "name": "F",
+                      "stream_links": [
+                        {
+                          "id": "lnk-d8623917",
+                          "name": "Trực Tiếp 1",
+                          "type": "hls",
+                          "default": true,
+                          "url": "https://station1-global.vsc100.com/live/c172670b862faa43ffa4c8c64b2f229d/playlist.m3u8"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "match-4fe7095f",
+          "name": "⚽ Đội nhà vs Đội khách | Live 0 - 0 16:46 11/06/2026",
+          "tournament": "Tiếu Lâm Live",
+          "logo_nha": "https://media.api-sports.io/football/teams/19155.png",
+          "logo_khach": "https://media.api-sports.io/football/teams/19148.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://media.api-sports.io/football/teams/19155.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "match-4fe7095f",
+              "name": "Tiếu Lâm",
+              "contents": [
+                {
+                  "id": "match-4fe7095f",
+                  "name": "Đội nhà vs Đội khách",
+                  "streams": [
+                    {
+                      "id": "match-4fe7095f",
+                      "name": "F",
+                      "stream_links": [
+                        {
+                          "id": "lnk-784d0d15",
+                          "name": "Trực Tiếp 1",
+                          "type": "hls",
+                          "default": true,
+                          "url": "https://station1-global.vsc100.com/live/3e68c5bf656d4a78f7136d60ae6e5bd8/playlist.m3u8"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "match-d9494e3a",
+          "name": "⚽ Đội nhà vs Đội khách | Live 0 - 0 16:46 11/06/2026",
+          "tournament": "Tiếu Lâm Live",
+          "logo_nha": "https://media.api-sports.io/football/teams/19155.png",
+          "logo_khach": "https://media.api-sports.io/football/teams/19148.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://media.api-sports.io/football/teams/19155.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "match-d9494e3a",
+              "name": "Tiếu Lâm",
+              "contents": [
+                {
+                  "id": "match-d9494e3a",
+                  "name": "Đội nhà vs Đội khách",
+                  "streams": [
+                    {
+                      "id": "match-d9494e3a",
+                      "name": "F",
+                      "stream_links": [
+                        {
+                          "id": "lnk-30acf440",
+                          "name": "Trực Tiếp 1",
+                          "type": "hls",
+                          "default": true,
+                          "url": "https://station1-global.vsc100.com/live/39b3265c2ce714ce61e8667df0646ddd/playlist.m3u8"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

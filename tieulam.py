@@ -48,20 +48,31 @@ def get_final_logo(team_name: str, site_logo: str) -> str:
 # =========================================================
 def relay_post(target_url: str, body: dict) -> dict:
     """Gọi API qua Cloudflare Worker relay (IP HKG/Singapore)"""
-    params = {
-        "secret": WORKER_SECRET,
-        "url":    target_url,
-        "method": "POST",
-    }
+    import urllib.parse
+
+    # Build URL thủ công để tránh double-encode
+    worker_url = (
+        f"{WORKER_URL}"
+        f"?secret={urllib.parse.quote(WORKER_SECRET, safe='')}"
+        f"&method=POST"
+        f"&url={urllib.parse.quote(target_url, safe='')}"
+    )
+
+    body_str = json.dumps(body)
+
     resp = requests.post(
-        WORKER_URL,
-        params=params,
-        json=body,
+        worker_url,
+        data=body_str,          # dùng data= thay vì json= để tránh double-serialize
         timeout=20,
         headers={"Content-Type": "application/json"}
     )
     resp.raise_for_status()
-    return resp.json()
+
+    # Worker debug mode trả về wrapper, extract response thật
+    raw = resp.json()
+    if "response" in raw:
+        return json.loads(raw["response"])
+    return raw
 
 # =========================================================
 # LẤY DANH SÁCH TRẬN LIVE TỪ API

@@ -8,10 +8,10 @@ import datetime
 import requests
 from github import Github
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
-from playwright_stealth import Stealth
+from playwright_stealth import stealth_sync  # 💡 Đã sửa lỗi import
 
 # =========================================================
-# CONFIG TIẾU LÂM TV - BẢN FULL HOÀN THIỆN
+# CONFIG TIẾU LÂM TV - BẢN FULL HOÀN THIỆN V9
 # =========================================================
 TARGET_SITE   = "https://sv1.tieulam1.live/trang-chu?type=football"
 BASE_URL      = "https://sv1.tieulam1.live"
@@ -115,7 +115,7 @@ JS_EXTRACT = """
 
 def capture_stream(context, match_url: str) -> list:
     page = context.new_page()
-    try: Stealth().apply_stealth_sync(page)
+    try: stealth_sync(page)  # 💡 Đã cập nhật cú pháp
     except: pass
     
     captured_link = None
@@ -125,9 +125,7 @@ def capture_stream(context, match_url: str) -> list:
         url = req.url
         if ".m3u8" in url.lower() and "/ad/" not in url.lower() and not captured_link:
             if "pull" in url.lower() or "live" in url.lower() or "asynccdn" in url.lower():
-                # Xóa token bảo mật mạng
                 clean_url = url.split("?")[0]
-                # Xóa CDN rác
                 if "pull.asynccdn.xyz" in clean_url:
                     clean_url = "https://pull.asynccdn.xyz" + clean_url.split("pull.asynccdn.xyz")[1]
                 captured_link = clean_url
@@ -136,7 +134,6 @@ def capture_stream(context, match_url: str) -> list:
     
     try:
         page.goto(match_url, wait_until="domcontentloaded", timeout=45000)
-        # Quét link siêu tốc (tối đa 12 giây, có là out luôn)
         for _ in range(12):
             if captured_link:
                 break
@@ -200,18 +197,17 @@ def scrape_and_push():
     print(f"🚀 BẮT ĐẦU BOT TIẾU LÂM TV (Giờ VN): {now_str}")
 
     with sync_playwright() as p:
-        # 💡 CHÚ Ý: ĐÃ ĐỂ HEADLESS=FALSE ĐỂ QUA MẶT CLOUDFLARE
+        # BẬT GIAO DIỆN ĐỂ KẾT HỢP VỚI XVFB (ẢO HÓA MÀN HÌNH)
         browser = p.chromium.launch(headless=False, args=["--no-sandbox", "--disable-setuid-sandbox"])
         context = browser.new_context(viewport={"width": 1920, "height": 1080}, user_agent=_HEADERS["User-Agent"], timezone_id="Asia/Ho_Chi_Minh")
         page = context.new_page()
-        try: Stealth().apply_stealth_sync(page)
+        try: stealth_sync(page)  # 💡 Đã cập nhật cú pháp
         except: pass
         
         try:
             print(f"📺 Đang mở trang chủ Tiếu Lâm...")
             page.goto(TARGET_SITE, wait_until="domcontentloaded", timeout=60000)
             
-            # Cuộn chuột để đánh thức giao diện
             for _ in range(5):
                 page.mouse.wheel(0, 800)
                 page.wait_for_timeout(1000)

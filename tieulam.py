@@ -45,34 +45,29 @@ def get_final_logo(team_name: str, site_logo: str) -> str:
 # =========================================================
 # CLOUDFLARE WORKER RELAY
 # Worker forward POST request đến API, bypass IP block
-# =========================================================
 def relay_post(target_url: str, body: dict) -> dict:
-    """Gọi API trực tiếp với headers giả lập từ Cloudflare IP"""
-    
-    # Headers giả lập browser từ SG/HK (gần Việt Nam)
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-        "Accept": "application/json",
-        "Accept-Language": "vi-VN,vi;q=0.9",
-        "Content-Type": "application/json",
-        "Origin": "https://sv1.tieulam1.live",
-        "Referer": "https://sv1.tieulam1.live/",
-        "Cache-Control": "no-cache",
-        "Pragma": "no-cache",
-    }
+    """Gọi API qua Worker relay với body base64 trong URL param"""
+    import urllib.parse
+    import base64
+
+    # Encode body thành base64
+    body_str = json.dumps(body, ensure_ascii=False)
+    body_b64 = base64.b64encode(body_str.encode("utf-8")).decode("ascii")
+
+    # Gọi Worker bằng GET (body nhúng base64)
+    worker_url = (
+        f"{WORKER_URL.rstrip('/')}"
+        f"?secret={urllib.parse.quote(WORKER_SECRET, safe='')}"
+        f"&url={urllib.parse.quote(target_url, safe='')}"
+        f"&body={urllib.parse.quote(body_b64, safe='')}"
+    )
 
     try:
-        resp = requests.post(
-            target_url,
-            json=body,
-            headers=headers,
-            timeout=15,
-            verify=True
-        )
+        resp = requests.get(worker_url, timeout=15)
         resp.raise_for_status()
         return resp.json()
     except requests.exceptions.RequestException as e:
-        print(f"❌ Lỗi gọi API trực tiếp: {e}")
+        print(f"❌ Worker relay error: {e}")
         return {"data": [], "total": 0}
 # =========================================================
 # LẤY DANH SÁCH TRẬN LIVE TỪ API

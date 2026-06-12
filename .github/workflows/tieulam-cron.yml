@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   scrape_and_update:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Checkout mã nguồn

@@ -44,3 +44,10 @@ jobs:
         GH_REPO: ${{ github.repository }}
       run: |
         xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" python tieulam.py
+
+    - name: Tải ảnh chụp màn hình lên GitHub Actions
+      uses: actions/upload-artifact@v4
+      if: always() # Ép GitHub luôn chạy bước này kể cả khi bot văng lỗi
+      with:
+        name: anh-hien-truong
+        path: man_hinh_bot.png

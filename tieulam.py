@@ -218,6 +218,8 @@ def scrape_and_push():
             
         except PWTimeout:
             print("   ⚠️ Lỗi Timeout: Có thể bị Cloudflare chặn IP hoặc web đang trống trận!")
+            page.screenshot(path="man_hinh_bot.png")
+            print("   📸 Đã chụp lại hiện trường lưu vào file man_hinh_bot.png")
         except Exception as e:
             print(f"   ⚠️ Có sự cố mạng: {e}")
             

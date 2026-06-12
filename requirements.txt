@@ -1,2 +1,4 @@
-PyGithub==2.2.0
+playwright==1.44.0
+playwright-stealth==1.0.6
+PyGithub==2.3.0
 requests==2.31.0

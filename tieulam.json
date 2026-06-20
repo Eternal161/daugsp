@@ -1,12 +1,238 @@
 {
   "id": "tieulam",
   "name": "Socolive (Sáng TV)",
-  "last_updated": "05:11 17/06/2026",
+  "last_updated": "07:48 20/06/2026",
   "groups": [
     {
       "id": "live",
       "name": "🔴 Live bóng đá",
-      "channels": []
+      "channels": [
+        {
+          "id": "kaytee-b92aef63610f",
+          "name": "⚽ World Cup vs Trực Tiếp | 07:30 20/6/26 World Cup Trực tiếp Bóng đá",
+          "tournament": "Socolive",
+          "logo_nha": "https://i.imgur.com/30aaqin.png",
+          "logo_khach": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/1280px-Flag_of_Brazil.svg.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://i.imgur.com/30aaqin.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "kaytee-b92aef63610f",
+              "name": "Socolive",
+              "contents": [
+                {
+                  "id": "kaytee-b92aef63610f",
+                  "name": "World Cup vs Trực Tiếp",
+                  "streams": [
+                    {
+                      "id": "kaytee-b92aef63610f",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "kaytee-5b2b5d52650e",
+          "name": "⚽ World Cup vs Sắp Diễn Ra | 10:00 20/6/26 World Cup Sắp diễn ra Bóng đá",
+          "tournament": "Socolive",
+          "logo_nha": "https://i.imgur.com/30aaqin.png",
+          "logo_khach": "https://media.api-sports.io/football/teams/777.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://i.imgur.com/30aaqin.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "⏳ Sắp đá",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#d54f1a"
+            }
+          ],
+          "sources": [
+            {
+              "id": "kaytee-5b2b5d52650e",
+              "name": "Socolive",
+              "contents": [
+                {
+                  "id": "kaytee-5b2b5d52650e",
+                  "name": "World Cup vs Sắp Diễn Ra",
+                  "streams": [
+                    {
+                      "id": "kaytee-5b2b5d52650e",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "kaytee-b92d88fdac66",
+          "name": "⚽ League Two vs Sắp Diễn Ra | 18:00 20/6/26 League Two Sắp diễn ra Bóng đá",
+          "tournament": "Socolive",
+          "logo_nha": "https://i.imgur.com/30aaqin.png",
+          "logo_khach": "https://media.api-sports.io/football/teams/19321.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://i.imgur.com/30aaqin.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "⏳ Sắp đá",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#d54f1a"
+            }
+          ],
+          "sources": [
+            {
+              "id": "kaytee-b92d88fdac66",
+              "name": "Socolive",
+              "contents": [
+                {
+                  "id": "kaytee-b92d88fdac66",
+                  "name": "League Two vs Sắp Diễn Ra",
+                  "streams": [
+                    {
+                      "id": "kaytee-b92d88fdac66",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "kaytee-962cd878d5fd",
+          "name": "⚽ Premier League vs Sắp Diễn Ra | 20:00 20/6/26 Premier League Sắp diễn ra Bóng đá",
+          "tournament": "Socolive",
+          "logo_nha": "https://i.imgur.com/30aaqin.png",
+          "logo_khach": "https://media.api-sports.io/football/teams/16611.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://i.imgur.com/30aaqin.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "⏳ Sắp đá",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#d54f1a"
+            }
+          ],
+          "sources": [
+            {
+              "id": "kaytee-962cd878d5fd",
+              "name": "Socolive",
+              "contents": [
+                {
+                  "id": "kaytee-962cd878d5fd",
+                  "name": "Premier League vs Sắp Diễn Ra",
+                  "streams": [
+                    {
+                      "id": "kaytee-962cd878d5fd",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "kaytee-4416e115b3f4",
+          "name": "⚽ Serie B vs Sắp Diễn Ra | 21:00 20/6/26 Serie B Sắp diễn ra Bóng đá",
+          "tournament": "Socolive",
+          "logo_nha": "https://i.imgur.com/30aaqin.png",
+          "logo_khach": "https://media.api-sports.io/football/teams/148.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://i.imgur.com/30aaqin.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "⏳ Sắp đá",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#d54f1a"
+            }
+          ],
+          "sources": [
+            {
+              "id": "kaytee-4416e115b3f4",
+              "name": "Socolive",
+              "contents": [
+                {
+                  "id": "kaytee-4416e115b3f4",
+                  "name": "Serie B vs Sắp Diễn Ra",
+                  "streams": [
+                    {
+                      "id": "kaytee-4416e115b3f4",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

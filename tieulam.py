@@ -13,7 +13,7 @@ from playwright_stealth import stealth_sync
 # =========================================================
 # CONFIG SOCOLIVE (THAY THẾ TIẾU LÂM TV)
 # =========================================================
-TARGET_SITE   = "https://socolivee.cv/"
+TARGET_SITE   = "https://xem.chaoga.live/lich-thi-dau/bong-da/1"
 FILE_PATH     = "tieulam.json" # Giữ nguyên tên file để App Sáng TV không bị lỗi
 LIMIT_MATCHES = 10  
 

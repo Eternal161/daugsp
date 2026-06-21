@@ -186,8 +186,7 @@ def scrape_and_push():
         browser = p.chromium.launch(executable_path="/usr/bin/chromium-browser", headless=True, args=["--no-sandbox", "--disable-setuid-sandbox"])
         context = browser.new_context(viewport={"width": 1920, "height": 1080}, user_agent=_HEADERS["User-Agent"], timezone_id="Asia/Ho_Chi_Minh")
         page = context.new_page()
-        try: stealth_sync(page)
-        except: pass
+        
         
         try:
             print(f"📺 Đang mở trang chủ Socolive ({TARGET_SITE})...")

@@ -6,11 +6,11 @@ import uuid
 import hashlib
 import datetime
 import requests
+import base64
 from bs4 import BeautifulSoup
-from github import Github
 
 # =========================================================
-# CONFIG SOCOLIVE (BẢN SIÊU NHẸ - KHÔNG DÙNG PLAYWRIGHT)
+# CONFIG SOCOLIVE (BẢN SIÊU NHẸ - ZERO THƯ VIỆN CỒNG KỀNH)
 # =========================================================
 TARGET_SITE   = "https://sv2.tieulam.xyz/trang-chu?type=football"
 FILE_PATH     = "tieulam.json" 
@@ -38,15 +38,12 @@ def get_final_logo(team_name: str, site_logo: str) -> str:
     return f"https://ui-avatars.com/api/?name={initials}&size=200&background=1565C0&color=ffffff&bold=true"
 
 def capture_stream_requests(match_url: str) -> list:
-    # Quét trực tiếp mã nguồn HTML để mò link m3u8 (siêu tốc)
     try:
         r = requests.get(match_url, headers=HEADERS, timeout=10)
-        html_text = r.text.replace('\\/', '/') # Sửa lỗi gạch chéo trong JSON
+        html_text = r.text.replace('\\/', '/')
         
-        # Tìm tất cả các link m3u8 có trong trang
         links = re.findall(r'(https?://[^\s"\'<>]+\.m3u8[^\s"\'<>]*)', html_text)
         if links:
-            # Lọc ưu tiên các link có chứa auth_key hoặc pull
             valid_links = [l for l in links if 'auth_key' in l or 'pull' in l or 'stream' in l]
             if valid_links:
                 return [valid_links[0]]
@@ -98,6 +95,39 @@ def build_channel(m, stream_urls):
         }],
     }
 
+def push_to_github_api(content_str, commit_msg):
+    # 💡 Tuyệt chiêu đẩy file lên Github bằng API thuần (Không cần PyGithub)
+    url = f"https://api.github.com/repos/{REPO_NAME}/contents/{FILE_PATH}"
+    headers = {
+        "Authorization": f"token {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+    
+    # B1: Lấy mã SHA của file cũ (nếu có) để đè lên
+    sha = None
+    try:
+        resp = requests.get(url, headers=headers)
+        if resp.status_code == 200:
+            sha = resp.json().get('sha')
+    except:
+        pass
+
+    # B2: Mã hóa nội dung file sang Base64 chuẩn Github
+    content_b64 = base64.b64encode(content_str.encode('utf-8')).decode('utf-8')
+    data = {"message": commit_msg, "content": content_b64}
+    if sha:
+        data["sha"] = sha
+
+    # B3: Đẩy file lên
+    try:
+        put_resp = requests.put(url, headers=headers, json=data)
+        if put_resp.status_code in [200, 201]:
+            print(f"✅ Đã PUSH thành công file {FILE_PATH} lên GitHub!")
+        else:
+            print(f"❌ Lỗi Push Github: {put_resp.text}")
+    except Exception as e:
+        print(f"❌ Lỗi mạng khi Push: {e}")
+
 def scrape_and_push():
     now_vn = datetime.datetime.now(VN_TZ)
     now_str = now_vn.strftime("%H:%M %d/%m/%Y")
@@ -120,7 +150,6 @@ def scrape_and_push():
         href = a['href']
         if href in seen_href: continue
         
-        # Chỉ lấy link phòng live
         if not re.search(r'(/room/|/live/|/truc-tiep/|\d{4,})', href): continue
         if not href.startswith('http'):
             href = "https://sv2.tieulam.xyz" + href if href.startswith('/') else "https://sv2.tieulam.xyz/" + href
@@ -135,7 +164,6 @@ def scrape_and_push():
         home = imgs[0].get('alt', '').strip()
         away = imgs[1].get('alt', '').strip()
 
-        # Vét text nếu ảnh không có tên
         texts = [t.get_text(strip=True) for t in a.find_all(['span', 'p', 'div'])]
         texts = [t for t in t if len(t) > 1 and '/' not in t and ':' not in t]
         
@@ -152,7 +180,6 @@ def scrape_and_push():
         if key in seen_keys: continue
         seen_keys.add(key)
 
-        # Tìm thời gian
         time_str = "Sắp diễn ra"
         all_texts = [t.get_text(strip=True) for t in a.find_all(['span', 'p', 'div'])]
         for t in all_texts:
@@ -177,31 +204,20 @@ def scrape_and_push():
         streams = capture_stream_requests(m['href'])
         channels.append(build_channel(m, streams))
 
-    if not GITHUB_TOKEN:
-        print("\n⚠️ Không có GITHUB_TOKEN. Chỉ lưu ra file local.")
-        with open(FILE_PATH, "w", encoding="utf-8") as f:
-            json.dump({
-                "id": "tieulam", "name": "Socolive (Sáng TV)", "last_updated": now_str, 
-                "groups": [{"id": "live", "name": "🔴 Live bóng đá", "channels": channels}]
-            }, f, indent=2, ensure_ascii=False)
-        return
-
-    print("\n⏳ Đang tải dữ liệu lên GitHub...")
-    g = Github(GITHUB_TOKEN)
-    repo = g.get_repo(REPO_NAME)
-    content = json.dumps({
+    final_json = json.dumps({
         "id": "tieulam", "name": "Socolive (Sáng TV)", "last_updated": now_str, 
         "groups": [{"id": "live", "name": "🔴 Live bóng đá", "channels": channels}]
     }, indent=2, ensure_ascii=False)
-    
-    msg = f"⚽ Update Socolive Siêu nhẹ: {now_str}"
-    try:
-        existing = repo.get_contents(FILE_PATH)
-        repo.update_file(existing.path, msg, content, existing.sha)
-        print(f"✅ Đã CẬP NHẬT thành công lên {REPO_NAME}/{FILE_PATH}")
-    except:
-        repo.create_file(FILE_PATH, msg, content)
-        print(f"✅ Đã TẠO MỚI thành công file {FILE_PATH} trên GitHub!")
+
+    if not GITHUB_TOKEN:
+        print("\n⚠️ Không có GITHUB_TOKEN. Chỉ lưu ra file local.")
+        with open(FILE_PATH, "w", encoding="utf-8") as f:
+            f.write(final_json)
+        return
+
+    print("\n⏳ Đang đẩy dữ liệu thẳng lên GitHub (Không cần PyGithub)...")
+    commit_msg = f"⚽ Update Socolive: {now_str}"
+    push_to_github_api(final_json, commit_msg)
 
 if __name__ == "__main__":
     scrape_and_push()

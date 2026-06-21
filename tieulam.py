@@ -6,23 +6,23 @@ import uuid
 import hashlib
 import datetime
 import requests
+from bs4 import BeautifulSoup
 from github import Github
-from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
-
 
 # =========================================================
-# CONFIG SOCOLIVE (THAY THẾ TIẾU LÂM TV)
+# CONFIG SOCOLIVE (BẢN SIÊU NHẸ - KHÔNG DÙNG PLAYWRIGHT)
 # =========================================================
 TARGET_SITE   = "https://sv2.tieulam.xyz/trang-chu?type=football"
-FILE_PATH     = "tieulam.json" # Giữ nguyên tên file để App Sáng TV không bị lỗi
+FILE_PATH     = "tieulam.json" 
 LIMIT_MATCHES = 10  
 
 VN_TZ = datetime.timezone(datetime.timedelta(hours=7))
 GITHUB_TOKEN = os.getenv("GH_TOKEN")
 REPO_NAME    = os.getenv("GH_REPO", "Eternal161/daugsp")
 
-_HEADERS = {
+HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
 }
 
 def make_id(seed: str = "") -> str:
@@ -37,101 +37,23 @@ def get_final_logo(team_name: str, site_logo: str) -> str:
     initials = requests.utils.quote(team_name[:2] if len(team_name) >= 2 else "FC")
     return f"https://ui-avatars.com/api/?name={initials}&size=200&background=1565C0&color=ffffff&bold=true"
 
-# =========================================================
-# JS: BÓC TÁCH SOCOLIVE (THUẬT TOÁN QUÉT THẺ A TỔNG QUÁT)
-# =========================================================
-JS_EXTRACT = """
-() => {
-    const results = [];
-    const seen = new Set();
-    const clean = t => (t || '').replace(/\\s+/g, ' ').trim();
-
-    // Socolive thường bọc mỗi trận đấu trong 1 thẻ <a> có link chứa số ID phòng
-    const anchors = Array.from(document.querySelectorAll('a'));
-    
-    for (const a of anchors) {
-        const href = a.href || '';
-        if (seen.has(href)) continue;
-
-        // Tìm thẻ a chứa ít nhất 2 ảnh (logo 2 đội) và link có vẻ là link phòng live
-        const imgs = Array.from(a.querySelectorAll('img'));
-        if (imgs.length < 2) continue;
-
-        const isMatchLink = /\\/room\\/|\\/live\\/|\\/truc-tiep\\//.test(href) || href.match(/\\d{4,}/);
-        if (!isMatchLink) continue;
-
-        seen.add(href);
-
-        let homeLogo = imgs[0].src;
-        let awayLogo = imgs[1].src;
-
-        let home = clean(imgs[0].alt) || '';
-        let away = clean(imgs[1].alt) || '';
-
-        // Vét text nếu ảnh không có alt
-        const texts = Array.from(a.querySelectorAll('span, p, div'))
-                           .map(e => clean(e.innerText))
-                           .filter(t => t.length > 1 && !t.includes('/') && !t.includes(':'));
-        
-        if (!home && texts.length >= 2) {
-            home = texts[0];
-            away = texts[1];
-        } else if (!home) {
-            home = 'Đội nhà';
-            away = 'Đội khách';
-        }
-
-        // Tìm thời gian
-        let timeStr = 'Sắp diễn ra';
-        const timeNode = Array.from(a.querySelectorAll('span, p, div')).find(e => clean(e.innerText).match(/\\d{1,2}:\\d{2}|\\d{1,2}\\/\\d{2}|Live/i));
-        if (timeNode) {
-            timeStr = clean(timeNode.innerText);
-        }
-
-        const isLive = /live|trực tiếp|đang phát/i.test(a.innerText) || timeStr.includes('-');
-
-        results.push({ href, home, away, timeStr, homeLogo, awayLogo, tournament: 'Socolive', isLive });
-    }
-    return results;
-}
-"""
-
-def capture_stream(context, match_url: str) -> list:
-    page = context.new_page()
-    
-    
-    captured_link = None
-    
-    def handle_request(req):
-        nonlocal captured_link
-        url = req.url
-        # 💡 GIỮ NGUYÊN auth_key, KHÔNG CẮT BỎ NHƯ TIẾU LÂM
-        if ".m3u8" in url.lower() and not captured_link:
-            if "auth_key=" in url or "pull" in url.lower() or "stream" in url.lower():
-                captured_link = url
-
-    page.on("request", handle_request)
-    
+def capture_stream_requests(match_url: str) -> list:
+    # Quét trực tiếp mã nguồn HTML để mò link m3u8 (siêu tốc)
     try:
-        page.goto(match_url, wait_until="domcontentloaded", timeout=45000)
-        # Bấm nút Play nếu có (đánh thức luồng stream)
-        try:
-            page.locator('button[class*="play"], div[class*="play"]').first.click(timeout=3000)
-        except:
-            pass
-
-        # Quét link siêu tốc (tối đa 12 giây)
-        for _ in range(12):
-            if captured_link:
-                break
-            page.wait_for_timeout(1000)
-    except Exception:
+        r = requests.get(match_url, headers=HEADERS, timeout=10)
+        html_text = r.text.replace('\\/', '/') # Sửa lỗi gạch chéo trong JSON
+        
+        # Tìm tất cả các link m3u8 có trong trang
+        links = re.findall(r'(https?://[^\s"\'<>]+\.m3u8[^\s"\'<>]*)', html_text)
+        if links:
+            # Lọc ưu tiên các link có chứa auth_key hoặc pull
+            valid_links = [l for l in links if 'auth_key' in l or 'pull' in l or 'stream' in l]
+            if valid_links:
+                return [valid_links[0]]
+            return [links[0]]
+    except:
         pass
-    finally:
-        page.remove_listener("request", handle_request)
-        page.close()
-    
-    return [captured_link] if captured_link else []
+    return []
 
 def build_channel(m, stream_urls):
     home = (m.get('home') or "Unknown").title()
@@ -179,56 +101,81 @@ def build_channel(m, stream_urls):
 def scrape_and_push():
     now_vn = datetime.datetime.now(VN_TZ)
     now_str = now_vn.strftime("%H:%M %d/%m/%Y")
-    print(f"🚀 BẮT ĐẦU BOT SOCOLIVE (Giờ VN): {now_str}")
+    print(f"🚀 BẮT ĐẦU BOT SOCOLIVE (Bản Siêu Nhẹ - Giờ VN): {now_str}")
 
-    with sync_playwright() as p:
-        # BẬT GIAO DIỆN KẾT HỢP XVFB HOẶC TASK SCHEDULER
-        browser = p.chromium.launch(executable_path="/usr/bin/chromium-browser", headless=True, args=["--no-sandbox", "--disable-setuid-sandbox"])
-        context = browser.new_context(viewport={"width": 1920, "height": 1080}, user_agent=_HEADERS["User-Agent"], timezone_id="Asia/Ho_Chi_Minh")
-        page = context.new_page()
-        
-        
-        try:
-            print(f"📺 Đang mở trang chủ Socolive ({TARGET_SITE})...")
-            page.goto(TARGET_SITE, wait_until="domcontentloaded", timeout=60000)
-            
-            print("⏳ Đang cuộn trang để tải dữ liệu trận đấu...")
-            for _ in range(6):
-                page.mouse.wheel(0, 1000)
-                page.wait_for_timeout(1500)
-            
-            page.wait_for_timeout(3000) 
-            
-        except PWTimeout:
-            print("   ⚠️ Lỗi Timeout mạng. Tiếp tục trích xuất những gì đang có...")
-            page.screenshot(path="man_hinh_bot.png")
-        except Exception as e:
-            print(f"   ⚠️ Có sự cố mạng: {e}")
-            
-        raw_matches = page.evaluate(JS_EXTRACT)
-        
-        valid_matches = []
-        seen_keys = set()
-        for m in raw_matches:
-            h_lower = (m.get('home') or "").lower()
-            a_lower = (m.get('away') or "").lower()
-            if not h_lower or not a_lower or "unknown" in h_lower: continue
-            if "đội nhà" in h_lower: continue
-            
-            key = f"{h_lower} vs {a_lower}"
-            if key not in seen_keys:
-                seen_keys.add(key)
-                valid_matches.append(m)
+    try:
+        print(f"📺 Đang tải trang chủ Socolive ({TARGET_SITE})...")
+        res = requests.get(TARGET_SITE, headers=HEADERS, timeout=15)
+        soup = BeautifulSoup(res.text, 'html.parser')
+    except Exception as e:
+        print(f"⚠️ Có sự cố mạng: {e}")
+        return
 
-        raw_matches = valid_matches[:LIMIT_MATCHES]
-        channels = []
+    anchors = soup.find_all('a', href=True)
+    raw_matches = []
+    seen_keys = set()
+    seen_href = set()
+
+    for a in anchors:
+        href = a['href']
+        if href in seen_href: continue
         
-        print(f"👉 Phát hiện {len(raw_matches)} trận đấu. Bắt đầu soi link m3u8 Socolive...")
-        for idx, m in enumerate(raw_matches, 1):
-            print(f"   [{idx}/{len(raw_matches)}] {m['home']} vs {m['away']} ({m['timeStr']})")
-            
-            streams = capture_stream(context, m["href"])
-            channels.append(build_channel(m, streams))
+        # Chỉ lấy link phòng live
+        if not re.search(r'(/room/|/live/|/truc-tiep/|\d{4,})', href): continue
+        if not href.startswith('http'):
+            href = "https://sv2.tieulam.xyz" + href if href.startswith('/') else "https://sv2.tieulam.xyz/" + href
+
+        imgs = a.find_all('img')
+        if len(imgs) < 2: continue
+        
+        seen_href.add(href)
+        
+        home_logo = imgs[0].get('src', '')
+        away_logo = imgs[1].get('src', '')
+        home = imgs[0].get('alt', '').strip()
+        away = imgs[1].get('alt', '').strip()
+
+        # Vét text nếu ảnh không có tên
+        texts = [t.get_text(strip=True) for t in a.find_all(['span', 'p', 'div'])]
+        texts = [t for t in t if len(t) > 1 and '/' not in t and ':' not in t]
+        
+        if not home and len(texts) >= 2:
+            home, away = texts[0], texts[1]
+        elif not home:
+            home, away = "Đội nhà", "Đội khách"
+
+        h_lower = home.lower()
+        a_lower = away.lower()
+        if not h_lower or not a_lower or "unknown" in h_lower or "đội nhà" in h_lower: continue
+
+        key = f"{h_lower} vs {a_lower}"
+        if key in seen_keys: continue
+        seen_keys.add(key)
+
+        # Tìm thời gian
+        time_str = "Sắp diễn ra"
+        all_texts = [t.get_text(strip=True) for t in a.find_all(['span', 'p', 'div'])]
+        for t in all_texts:
+            if re.search(r'\d{1,2}:\d{2}|\d{1,2}/\d{2}|Live', t, re.I):
+                time_str = t
+                break
+
+        is_live = bool(re.search(r'live|trực tiếp|đang phát', a.get_text(), re.I) or '-' in time_str)
+
+        raw_matches.append({
+            'href': href, 'home': home, 'away': away, 
+            'timeStr': time_str, 'homeLogo': home_logo, 'awayLogo': away_logo, 
+            'tournament': 'Socolive', 'isLive': is_live
+        })
+
+    raw_matches = raw_matches[:LIMIT_MATCHES]
+    channels = []
+    
+    print(f"👉 Phát hiện {len(raw_matches)} trận đấu. Bắt đầu quét nhanh link m3u8...")
+    for idx, m in enumerate(raw_matches, 1):
+        print(f"   [{idx}/{len(raw_matches)}] {m['home']} vs {m['away']} ({m['timeStr']})")
+        streams = capture_stream_requests(m['href'])
+        channels.append(build_channel(m, streams))
 
     if not GITHUB_TOKEN:
         print("\n⚠️ Không có GITHUB_TOKEN. Chỉ lưu ra file local.")
@@ -247,7 +194,7 @@ def scrape_and_push():
         "groups": [{"id": "live", "name": "🔴 Live bóng đá", "channels": channels}]
     }, indent=2, ensure_ascii=False)
     
-    msg = f"⚽ Update Socolive (Thay Tiếu Lâm): {now_str}"
+    msg = f"⚽ Update Socolive Siêu nhẹ: {now_str}"
     try:
         existing = repo.get_contents(FILE_PATH)
         repo.update_file(existing.path, msg, content, existing.sha)

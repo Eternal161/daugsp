@@ -8,7 +8,7 @@ import datetime
 import requests
 from github import Github
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
-from playwright_stealth import stealth_sync
+
 
 # =========================================================
 # CONFIG SOCOLIVE (THAY THẾ TIẾU LÂM TV)
@@ -98,8 +98,7 @@ JS_EXTRACT = """
 
 def capture_stream(context, match_url: str) -> list:
     page = context.new_page()
-    try: stealth_sync(page)
-    except: pass
+    
     
     captured_link = None
     
@@ -184,7 +183,7 @@ def scrape_and_push():
 
     with sync_playwright() as p:
         # BẬT GIAO DIỆN KẾT HỢP XVFB HOẶC TASK SCHEDULER
-        browser = p.chromium.launch(headless=True, args=["--no-sandbox", "--disable-setuid-sandbox"])
+        browser = p.chromium.launch(executable_path="/usr/bin/chromium-browser", headless=True, args=["--no-sandbox", "--disable-setuid-sandbox"])
         context = browser.new_context(viewport={"width": 1920, "height": 1080}, user_agent=_HEADERS["User-Agent"], timezone_id="Asia/Ho_Chi_Minh")
         page = context.new_page()
         try: stealth_sync(page)

@@ -236,7 +236,7 @@ def build_channel(m: dict, stream_urls: list) -> dict:
 # =========================================================
 def scrape_and_push():
     now_str = datetime.datetime.now(VN_TZ).strftime("%H:%M %d/%m/%Y")
-    print(f"🚀 BẮT ĐẦU BOT LƯƠNG SƠN (Giờ VN): {now_str} - soco.py:239")
+    print(f"🚀 BẮT ĐẦU BOT LƯƠNG SƠN (Giờ VN): {now_str} - tieulam.py:239")
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True, args=["--no-sandbox", "--disable-setuid-sandbox"])
@@ -283,11 +283,11 @@ def scrape_and_push():
                 valid_matches.append(m)
 
         raw_matches = valid_matches[:LIMIT_MATCHES]
-        print(f"\n🎥 QUÉT TẤT CẢ {len(raw_matches)} TRẬN (BAO GỒM TRẬN SẮP TỚI)... - soco.py:286")
+        print(f"\n🎥 QUÉT TẤT CẢ {len(raw_matches)} TRẬN (BAO GỒM TRẬN SẮP TỚI)... - tieulam.py:286")
 
         for idx, m in enumerate(raw_matches, 1):
             m["timeStr"] = m.get("timeStr") or parse_time_from_url(m["href"]) or "Không rõ"
-            print(f"[{idx}/{len(raw_matches)}] {m['home']} vs {m['away']} ({m['timeStr']}) - soco.py:290")
+            print(f"[{idx}/{len(raw_matches)}] {m['home']} vs {m['away']} ({m['timeStr']}) - tieulam.py:290")
             
             # Chỉ đi cào stream nếu trận đấu có dấu hiệu đang Live (Tiết kiệm thời gian)
             m["streams"] = []
@@ -310,9 +310,9 @@ def scrape_and_push():
     try:
         with open(FILE_PATH, "w", encoding="utf-8") as f:
             f.write(content)
-        print(f"\n💾 Đã lưu file local thành công: {FILE_PATH}  Đã ghi {len(channels)} trận! - soco.py:313")
+        print(f"\n💾 Đã lưu file local thành công: {FILE_PATH}  Đã ghi {len(channels)} trận! - tieulam.py:313")
     except Exception as e:
-        print(f"❌ Lỗi khi lưu file local: {e} - soco.py:315")
+        print(f"❌ Lỗi khi lưu file local: {e} - tieulam.py:315")
 
     # Đẩy lên GitHub
     if GITHUB_TOKEN:
@@ -321,10 +321,10 @@ def scrape_and_push():
         try:
             existing = repo.get_contents(FILE_PATH)
             repo.update_file(existing.path, msg, content, existing.sha)
-            print("\n✅ Đã cập nhật thành công lên GitHub! - soco.py:324")
+            print("\n✅ Đã cập nhật thành công lên GitHub! - tieulam.py:324")
         except:
             repo.create_file(FILE_PATH, msg, content)
-            print("\n✅ Đã khởi tạo file mới trên GitHub! - soco.py:327")
+            print("\n✅ Đã khởi tạo file mới trên GitHub! - tieulam.py:327")
 
 if __name__ == "__main__":
     scrape_and_push()

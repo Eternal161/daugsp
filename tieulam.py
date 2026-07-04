@@ -8,7 +8,24 @@ import datetime
 import requests
 from github import Github
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
-from playwright_stealth import Stealth
+
+# =========================================================
+# 💡 BỘ GIÁP STEALTH BẤT TỬ (Tự động thích ứng mọi phiên bản)
+# =========================================================
+def apply_stealth(page):
+    try:
+        # Thử cú pháp mới nhất của playwright-stealth
+        from playwright_stealth import stealth_sync
+        stealth_sync(page)
+    except ImportError:
+        try:
+            # Nếu bản cũ hơn thì dùng cú pháp class Stealth
+            from playwright_stealth import Stealth
+            Stealth().apply_stealth_sync(page)
+        except Exception:
+            pass
+    except Exception:
+        pass
 
 # =========================================================
 # CONFIG XOILAC (CARIBBEAN BUSINESS) -> XUẤT TIEULAM.JSON
@@ -21,7 +38,6 @@ MAX_BLV       = 6        # Lấy tối đa 6 BLV mỗi trận
 
 VN_TZ = datetime.timezone(datetime.timedelta(hours=7))
 GITHUB_TOKEN = os.getenv("GH_TOKEN")
-# 💡 Trỏ đúng về repo đang chứa tab Tiếu Lâm của bạn
 REPO_NAME    = os.getenv("GH_REPO", "Eternal161/daugsp")
 
 _HEADERS = {
@@ -47,9 +63,8 @@ def get_final_logo(team_name: str, site_logo: str) -> str:
     return f"https://ui-avatars.com/api/?name={initials}&size=200&background=1565C0&color=ffffff&bold=true"
 
 def format_xoilac_time(time_str: str) -> str:
-    # Biến đổi "08:30 - 04.07" thành "08:30 04/07/2026" cho chuẩn SángTV
     try:
-        clean = time_str.replace(" - ", " ").replace(".", "/").trim()
+        clean = time_str.replace(" - ", " ").replace(".", "/").strip()
         if re.search(r'\d{1,2}:\d{2}\s+\d{1,2}/\d{1,2}$', clean):
             clean += f"/{datetime.datetime.now(VN_TZ).year}"
         return clean
@@ -65,7 +80,6 @@ JS_EXTRACT = """
     const seen = new Set();
     const clean = t => (t || '').replace(/\\s+/g, ' ').trim();
 
-    // Tìm các container trận đấu chuẩn Xoilac (grid-matches__item-match)
     const matchCards = document.querySelectorAll('[class*="item-match"], [class*="match-football-item"]');
 
     matchCards.forEach(card => {
@@ -76,14 +90,12 @@ JS_EXTRACT = """
         if (seen.has(href)) return;
         seen.add(href);
 
-        // Lấy tên 2 đội
         let home = '', away = '';
         const homeEl = card.querySelector('[class*="team--home-name"], [class*="home-team"], [class*="team-home"] [class*="name"]');
         const awayEl = card.querySelector('[class*="team--away-name"], [class*="away-team"], [class*="team-away"] [class*="name"]');
         if (homeEl) home = clean(homeEl.innerText);
         if (awayEl) away = clean(awayEl.innerText);
 
-        // Nếu không thấy trong class, cắt từ title link (vd: "Colombia vs Ghana lúc 08:30...")
         if (!home || !away) {
             const title = anchor.getAttribute('title') || '';
             const m = title.split(/\\s+vs\\s+/i);
@@ -93,7 +105,6 @@ JS_EXTRACT = """
             }
         }
 
-        // Lấy Logo
         let homeLogo = '', awayLogo = '';
         const imgs = card.querySelectorAll('img');
         if (imgs.length >= 2) {
@@ -101,14 +112,12 @@ JS_EXTRACT = """
             awayLogo = imgs[1].src;
         }
 
-        // Lấy giải đấu và thời gian
         const leagueEl = card.querySelector('[class*="league"], span[data-attr]');
         const tournament = leagueEl ? clean(leagueEl.innerText) : 'Bóng Đá';
 
         const timeEl = card.querySelector('[class*="date"], [class*="time"]');
         const timeStr = timeEl ? clean(timeEl.innerText) : '';
 
-        // Kiểm tra đang Live
         const statusEl = card.querySelector('[class*="status"], [class*="score"], .live-btn');
         const statusText = statusEl ? clean(statusEl.innerText).toLowerCase() : '';
         const isLive = statusText.includes('hiệp') || statusText.includes('ht') || statusText.includes('live') || /\\d+\\s*[:\\-]\\s*\\d+/.test(statusText);
@@ -123,12 +132,11 @@ JS_EXTRACT = """
 """
 
 # =========================================================
-# CAPTURE STREAM: THƯỢNG PHƯƠNG BẢO KIẾM SĂN BLV (FLV/M3U8)
+# CAPTURE STREAM: SĂN BLV (FLV/M3U8)
 # =========================================================
 def capture_xoilac_streams(context, match_url: str, global_seen_streams: set) -> list:
     page = context.new_page()
-    try: Stealth().apply_stealth_sync(page)
-    except: pass
+    apply_stealth(page) # 💡 Đã dùng bộ giáp mới
     
     current_captured = []
     seen_urls = set()
@@ -136,7 +144,6 @@ def capture_xoilac_streams(context, match_url: str, global_seen_streams: set) ->
 
     def process_url(url):
         u = url.lower()
-        # 💡 BẮT TRỌN CẢ FLV VÀ M3U8 (Ưu tiên FLV theo ý bạn)
         if (".flv" in u or ".m3u8" in u) and not any(b in u for b in BAD):
             if url not in seen_urls and url not in global_seen_streams:
                 seen_urls.add(url)
@@ -151,7 +158,6 @@ def capture_xoilac_streams(context, match_url: str, global_seen_streams: set) ->
         print("      > Đang vào trang xem để dò BLV...")
         page.goto(match_url, wait_until="domcontentloaded", timeout=25000)
         
-        # Chờ 4s để bắt luồng mặc định (BLV chính)
         deadline = time.time() + 4
         while time.time() < deadline:
             if current_captured: break
@@ -161,13 +167,10 @@ def capture_xoilac_streams(context, match_url: str, global_seen_streams: set) ->
             streams_dict["⭐ BLV Mặc Định"] = current_captured[-1]
             global_seen_streams.add(current_captured[-1])
 
-        # 💡 QUÉTT TẤT CẢ CÁC NÚT BẤM CHỌN BLV BÊN DƯỚI PLAYER (HD BRADY, HD MAX, KEN...)
         blv_buttons = page.evaluate('''() => {
             let btns = [];
-            // Tìm các thẻ button, a, span trong khu vực chọn server
             document.querySelectorAll('button, a, span, div[class*="server"] > div, div[class*="stream"] > div').forEach((el, idx) => {
                 let txt = el.innerText.trim();
-                // Lọc ra các nút tên BLV (thường ngắn từ 2-15 ký tự, có chữ HD, SD, hoặc tên người)
                 if (txt && txt.length >= 2 && txt.length <= 18 && !txt.includes('\\n') && 
                     !txt.toLowerCase().includes('telegram') && !txt.toLowerCase().includes('facebook') && 
                     !txt.toLowerCase().includes('tất cả') && !txt.toLowerCase().includes('đóng')) {
@@ -181,14 +184,12 @@ def capture_xoilac_streams(context, match_url: str, global_seen_streams: set) ->
             return btns;
         }''')
 
-        # 💡 CHỌN LỌC TỐI ĐA 6 BLV (Ưu tiên các nút có chữ "HD")
         hd_btns = [b for b in blv_buttons if "HD" in b['text'].upper()]
         other_btns = [b for b in blv_buttons if "HD" not in b['text'].upper()]
         sorted_btns = (hd_btns + other_btns)[:MAX_BLV]
 
         for btn in sorted_btns:
             raw_name = btn['text']
-            # Dọn dẹp tên cho đẹp (VD: "▶ HD BRADY" -> "🎙️ BLV HD BRADY")
             clean_name = re.sub(r'^[▶\|\|\s]+', '', raw_name).strip()
             if not clean_name.upper().startswith("BLV"):
                 clean_name = f"🎙️ {clean_name}"
@@ -199,7 +200,7 @@ def capture_xoilac_streams(context, match_url: str, global_seen_streams: set) ->
             current_captured.clear()
             try:
                 page.click(btn['selector'], timeout=3000)
-                time.sleep(3.0) # Chờ Xoilac nạp luồng mới
+                time.sleep(3.0)
                 
                 if current_captured:
                     latest_url = current_captured[-1]
@@ -214,7 +215,6 @@ def capture_xoilac_streams(context, match_url: str, global_seen_streams: set) ->
     finally:
         page.close()
 
-    # Đóng gói kết quả
     results = []
     for name, url in streams_dict.items():
         results.append({"name": name, "url": url})
@@ -242,7 +242,7 @@ def build_channel(m: dict, stream_data: list) -> dict:
         stream_links.append({
             "id": make_link_id(),
             "name": s["name"],
-            "type": "flv" if ".flv" in u.lower() else "hls", # Tự động nhận diện FLV hoặc HLS
+            "type": "flv" if ".flv" in u.lower() else "hls",
             "default": idx == 0,
             "url": u
         })
@@ -276,8 +276,7 @@ def scrape_and_push():
         browser = p.chromium.launch(headless=True, args=["--no-sandbox", "--disable-setuid-sandbox"])
         context = browser.new_context(viewport={"width": 1920, "height": 1080}, user_agent=_HEADERS["User-Agent"], timezone_id="Asia/Ho_Chi_Minh")
         page = context.new_page()
-        try: Stealth().apply_stealth_sync(page)
-        except: pass
+        apply_stealth(page) # 💡 Đã dùng bộ giáp mới
 
         try:
             print(f"📺 Đang tải trang chủ {TARGET_SITE}...")
@@ -309,13 +308,11 @@ def scrape_and_push():
         for idx, m in enumerate(raw_matches, 1):
             print(f"\n[{idx}/{len(raw_matches)}] {m['home']} vs {m['away']} ({m['timeStr']})")
             streams = []
-            # Nếu trận đang đá hoặc sắp đá thì mới cào stream
             if m.get("isLive") or "00:" in m.get("timeStr", "") or "lúc" in m["href"]:
                 streams = capture_xoilac_streams(context, m["href"], global_seen_streams)
             
             channels.append(build_channel(m, streams))
 
-    # Đóng gói và đẩy lên GitHub (ghi đè tieulam.json)
     if GITHUB_TOKEN:
         g = Github(GITHUB_TOKEN)
         repo = g.get_repo(REPO_NAME)

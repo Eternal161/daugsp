@@ -1,15 +1,15 @@
 {
   "id": "tieulam",
   "name": "Tiếu Lâm TV (Xoilac)",
-  "last_updated": "16:00 04/07/2026",
+  "last_updated": "00:24 05/07/2026",
   "groups": [
     {
       "id": "live",
       "name": "🔴 Live bóng đá Xoilac",
       "channels": [
         {
-          "id": "tieulam-19e430768af3",
-          "name": "⚽ Canada vs Ma Rốc | FIFA WORLD CUP | ",
+          "id": "tieulam-dc66ff2bd21c",
+          "name": "⚽ Canada vs Ma Rốc | FIFA WORLD CUP | Hiệp 1: 24'",
           "tournament": "FIFA WORLD CUP",
           "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/kp3glrw7hwqdyjv/image/small",
           "logo_khach": "https://imgts.sportpulseapiz.com/football/team/gy0or5jhyj4qwzv/image/small",
@@ -26,25 +26,61 @@
           },
           "labels": [
             {
-              "text": "⏳ Chưa live",
+              "text": "● Live",
               "position": "top-left",
               "color": "#00ffffff",
-              "text_color": "#d54f1a"
+              "text_color": "#ff0000"
             }
           ],
           "sources": [
             {
-              "id": "tieulam-19e430768af3",
+              "id": "tieulam-dc66ff2bd21c",
               "name": "Tiếu Lâm (Xoilac)",
               "contents": [
                 {
-                  "id": "tieulam-19e430768af3",
+                  "id": "tieulam-dc66ff2bd21c",
                   "name": "Canada vs Ma Rốc",
                   "streams": [
                     {
-                      "id": "tieulam-19e430768af3",
+                      "id": "tieulam-dc66ff2bd21c",
                       "name": "F",
-                      "stream_links": []
+                      "stream_links": [
+                        {
+                          "id": "lnk-19579bf695",
+                          "name": "🎙️ HD NICK",
+                          "type": "flv",
+                          "default": true,
+                          "url": "https://live3.procdnlive.com/livecdn/channel1.flv?auth_key=3000001783185870-0-0-4ab1256663d29e8e320e5d2be7f69ee6"
+                        },
+                        {
+                          "id": "lnk-f65d7d4916",
+                          "name": "🎙️ HD MAX",
+                          "type": "flv",
+                          "default": false,
+                          "url": "https://live3.procdnlive.com/livecdn/channel5.flv?auth_key=3000001783185873-0-0-8523670a8920c41a646f405f2274d3e0"
+                        },
+                        {
+                          "id": "lnk-031f052ced",
+                          "name": "🎙️ HD ASTRA",
+                          "type": "flv",
+                          "default": false,
+                          "url": "https://live3.procdnlive.com/livecdn/channel6.flv?auth_key=3000001783185876-0-0-d066f259c6303e27c40b9bc048dff922"
+                        },
+                        {
+                          "id": "lnk-99a79e72a1",
+                          "name": "🎙️ HD KEN",
+                          "type": "flv",
+                          "default": false,
+                          "url": "https://live3.procdnlive.com/livecdn/channel11.flv?auth_key=3000001783185879-0-0-d2d8ec2e1e26f49f162cabcde3cbcfc1"
+                        },
+                        {
+                          "id": "lnk-9530a3cf9f",
+                          "name": "🎙️ HD RIO",
+                          "type": "flv",
+                          "default": false,
+                          "url": "https://live3.procdnlive.com/livecdn/channel18.flv?auth_key=3000001783185883-0-0-fa48a8a3fb44d9eb18d4982d1d601738"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -53,7 +89,7 @@
           ]
         },
         {
-          "id": "tieulam-baa80261e1a8",
+          "id": "tieulam-3c7d69c1e07e",
           "name": "⚽ Paraguay vs Pháp | FIFA WORLD CUP | ",
           "tournament": "FIFA WORLD CUP",
           "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/kp3glrw7hwqdyjv/image/small",
@@ -79,15 +115,15 @@
           ],
           "sources": [
             {
-              "id": "tieulam-baa80261e1a8",
+              "id": "tieulam-3c7d69c1e07e",
               "name": "Tiếu Lâm (Xoilac)",
               "contents": [
                 {
-                  "id": "tieulam-baa80261e1a8",
+                  "id": "tieulam-3c7d69c1e07e",
                   "name": "Paraguay vs Pháp",
                   "streams": [
                     {
-                      "id": "tieulam-baa80261e1a8",
+                      "id": "tieulam-3c7d69c1e07e",
                       "name": "F",
                       "stream_links": []
                     }
@@ -98,11 +134,11 @@
           ]
         },
         {
-          "id": "tieulam-22e9a1384068",
-          "name": "⚽ Manly United vs Sd Raiders Fc | NSW PREMIER LEAGUE | Hiệp 2: 90+'",
-          "tournament": "NSW PREMIER LEAGUE",
-          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/z318q66hoz1qo9j/image/small",
-          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/pxwrxlhgwklryk0/image/small",
+          "id": "tieulam-72a1a85df4a2",
+          "name": "⚽ Widzew Lodz vs Dunajska Streda | GIAO HỮU CLB | Hiệp 2: 90'",
+          "tournament": "GIAO HỮU CLB",
+          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlhgpryk0j/image/small",
+          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/kn54qllh088qvy9/image/small",
           "type": "single",
           "display": "thumbnail-only",
           "enable_detail": false,
@@ -110,7 +146,52 @@
             "padding": 1,
             "background_color": "#ececec",
             "display": "contain",
-            "url": "https://imgts.sportpulseapiz.com/football/competition/z318q66hoz1qo9j/image/small",
+            "url": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlhgpryk0j/image/small",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "🔴 Chờ stream",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "tieulam-72a1a85df4a2",
+              "name": "Tiếu Lâm (Xoilac)",
+              "contents": [
+                {
+                  "id": "tieulam-72a1a85df4a2",
+                  "name": "Widzew Lodz vs Dunajska Streda",
+                  "streams": [
+                    {
+                      "id": "tieulam-72a1a85df4a2",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "tieulam-c1198e712710",
+          "name": "⚽ Trans Narva vs Levadia Tallinn | VĐQG ESTONIA | Hiệp 2: 68'",
+          "tournament": "VĐQG ESTONIA",
+          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/jednm9whokryox8/image/small",
+          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/pxwrxlhgno1ryk0/image/small",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://imgts.sportpulseapiz.com/football/competition/jednm9whokryox8/image/small",
             "width": 1600,
             "height": 1200
           },
@@ -124,23 +205,23 @@
           ],
           "sources": [
             {
-              "id": "tieulam-22e9a1384068",
+              "id": "tieulam-c1198e712710",
               "name": "Tiếu Lâm (Xoilac)",
               "contents": [
                 {
-                  "id": "tieulam-22e9a1384068",
-                  "name": "Manly United vs Sd Raiders Fc",
+                  "id": "tieulam-c1198e712710",
+                  "name": "Trans Narva vs Levadia Tallinn",
                   "streams": [
                     {
-                      "id": "tieulam-22e9a1384068",
+                      "id": "tieulam-c1198e712710",
                       "name": "F",
                       "stream_links": [
                         {
-                          "id": "lnk-470cc90a3a",
+                          "id": "lnk-ff0b635ca8",
                           "name": "🎙️ WC 2026",
                           "type": "flv",
                           "default": true,
-                          "url": "https://live3.procdnlive.com/livecdn/channel17.flv?auth_key=3000001783155669-0-0-e7d4d5d4298cfee8adec4cbfab71fa8c"
+                          "url": "https://live3.procdnlive.com/livecdn/channel20.flv?auth_key=3000001783185917-0-0-56d30c7826a7ae394e4014a6d62ac59a"
                         }
                       ]
                     }
@@ -151,11 +232,11 @@
           ]
         },
         {
-          "id": "tieulam-e22e1d55868f",
-          "name": "⚽ North Geelong Warriors vs Port Melbourne | VICTORIAN STATE DIVISION 1 | Kết thúc",
-          "tournament": "VICTORIAN STATE DIVISION 1",
-          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/e4wyrn4h8z1q86p/image/small",
-          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/pxwrxlhg456ryk0/image/small",
+          "id": "tieulam-351aa9acaf0c",
+          "name": "⚽ Paide Linnameeskond vs Parnu Jk Vaprus | VĐQG ESTONIA | Hiệp 2: 70'",
+          "tournament": "VĐQG ESTONIA",
+          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/jednm9whokryox8/image/small",
+          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/y39mp1h3dzjmojx/image/small",
           "type": "single",
           "display": "thumbnail-only",
           "enable_detail": false,
@@ -163,195 +244,7 @@
             "padding": 1,
             "background_color": "#ececec",
             "display": "contain",
-            "url": "https://imgts.sportpulseapiz.com/football/competition/e4wyrn4h8z1q86p/image/small",
-            "width": 1600,
-            "height": 1200
-          },
-          "labels": [
-            {
-              "text": "⏳ Chưa live",
-              "position": "top-left",
-              "color": "#00ffffff",
-              "text_color": "#d54f1a"
-            }
-          ],
-          "sources": [
-            {
-              "id": "tieulam-e22e1d55868f",
-              "name": "Tiếu Lâm (Xoilac)",
-              "contents": [
-                {
-                  "id": "tieulam-e22e1d55868f",
-                  "name": "North Geelong Warriors vs Port Melbourne",
-                  "streams": [
-                    {
-                      "id": "tieulam-e22e1d55868f",
-                      "name": "F",
-                      "stream_links": []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "tieulam-0b4bf0733025",
-          "name": "⚽ Perth Glory (R) vs Balcatta Fc | WESTERN AUSTRALIA NPL | Kết thúc",
-          "tournament": "WESTERN AUSTRALIA NPL",
-          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/vl7oqdehnypr510/image/small",
-          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/8yomo4h7l4xq0j6/image/small",
-          "type": "single",
-          "display": "thumbnail-only",
-          "enable_detail": false,
-          "image": {
-            "padding": 1,
-            "background_color": "#ececec",
-            "display": "contain",
-            "url": "https://imgts.sportpulseapiz.com/football/competition/vl7oqdehnypr510/image/small",
-            "width": 1600,
-            "height": 1200
-          },
-          "labels": [
-            {
-              "text": "⏳ Chưa live",
-              "position": "top-left",
-              "color": "#00ffffff",
-              "text_color": "#d54f1a"
-            }
-          ],
-          "sources": [
-            {
-              "id": "tieulam-0b4bf0733025",
-              "name": "Tiếu Lâm (Xoilac)",
-              "contents": [
-                {
-                  "id": "tieulam-0b4bf0733025",
-                  "name": "Perth Glory (R) vs Balcatta Fc",
-                  "streams": [
-                    {
-                      "id": "tieulam-0b4bf0733025",
-                      "name": "F",
-                      "stream_links": []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "tieulam-07d7bfd6645e",
-          "name": "⚽ Fremantle City vs Bayswater City | WESTERN AUSTRALIA NPL | Kết thúc",
-          "tournament": "WESTERN AUSTRALIA NPL",
-          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/vl7oqdehnypr510/image/small",
-          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/pxwrxlhgvwxryk0/image/small",
-          "type": "single",
-          "display": "thumbnail-only",
-          "enable_detail": false,
-          "image": {
-            "padding": 1,
-            "background_color": "#ececec",
-            "display": "contain",
-            "url": "https://imgts.sportpulseapiz.com/football/competition/vl7oqdehnypr510/image/small",
-            "width": 1600,
-            "height": 1200
-          },
-          "labels": [
-            {
-              "text": "⏳ Chưa live",
-              "position": "top-left",
-              "color": "#00ffffff",
-              "text_color": "#d54f1a"
-            }
-          ],
-          "sources": [
-            {
-              "id": "tieulam-07d7bfd6645e",
-              "name": "Tiếu Lâm (Xoilac)",
-              "contents": [
-                {
-                  "id": "tieulam-07d7bfd6645e",
-                  "name": "Fremantle City vs Bayswater City",
-                  "streams": [
-                    {
-                      "id": "tieulam-07d7bfd6645e",
-                      "name": "F",
-                      "stream_links": []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "tieulam-c8bffecd093f",
-          "name": "⚽ Jincheon Hr Fc vs Siheung City | CÚP FA HÀN QUỐC | Hiệp 2: 85'",
-          "tournament": "CÚP FA HÀN QUỐC",
-          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/8y39mp1h3v6mojx/image/small",
-          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/vjxm8ghx7djr6od/image/small",
-          "type": "single",
-          "display": "thumbnail-only",
-          "enable_detail": false,
-          "image": {
-            "padding": 1,
-            "background_color": "#ececec",
-            "display": "contain",
-            "url": "https://imgts.sportpulseapiz.com/football/competition/8y39mp1h3v6mojx/image/small",
-            "width": 1600,
-            "height": 1200
-          },
-          "labels": [
-            {
-              "text": "● Live",
-              "position": "top-left",
-              "color": "#00ffffff",
-              "text_color": "#ff0000"
-            }
-          ],
-          "sources": [
-            {
-              "id": "tieulam-c8bffecd093f",
-              "name": "Tiếu Lâm (Xoilac)",
-              "contents": [
-                {
-                  "id": "tieulam-c8bffecd093f",
-                  "name": "Jincheon Hr Fc vs Siheung City",
-                  "streams": [
-                    {
-                      "id": "tieulam-c8bffecd093f",
-                      "name": "F",
-                      "stream_links": [
-                        {
-                          "id": "lnk-0f21b80624",
-                          "name": "🎙️ WC 2026",
-                          "type": "flv",
-                          "default": true,
-                          "url": "https://live3.procdnlive.com/livecdn/channel7.flv?auth_key=3000001783155690-0-0-06470bcfdd342cd6911f2573af084bd9"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "tieulam-d833ea374df2",
-          "name": "⚽ Nữ Queensland Lions vs Nữ Brisbane Olympic | AUSTRALIA QUEENSLAND WOMEN | Hiệp 2: 85'",
-          "tournament": "AUSTRALIA QUEENSLAND WOMEN",
-          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/9vjxm8ghjx1r6od/image/small",
-          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/dj2ryohjn85q1zp/image/small",
-          "type": "single",
-          "display": "thumbnail-only",
-          "enable_detail": false,
-          "image": {
-            "padding": 1,
-            "background_color": "#ececec",
-            "display": "contain",
-            "url": "https://imgts.sportpulseapiz.com/football/competition/9vjxm8ghjx1r6od/image/small",
+            "url": "https://imgts.sportpulseapiz.com/football/competition/jednm9whokryox8/image/small",
             "width": 1600,
             "height": 1200
           },
@@ -365,15 +258,15 @@
           ],
           "sources": [
             {
-              "id": "tieulam-d833ea374df2",
+              "id": "tieulam-351aa9acaf0c",
               "name": "Tiếu Lâm (Xoilac)",
               "contents": [
                 {
-                  "id": "tieulam-d833ea374df2",
-                  "name": "Nữ Queensland Lions vs Nữ Brisbane Olympic",
+                  "id": "tieulam-351aa9acaf0c",
+                  "name": "Paide Linnameeskond vs Parnu Jk Vaprus",
                   "streams": [
                     {
-                      "id": "tieulam-d833ea374df2",
+                      "id": "tieulam-351aa9acaf0c",
                       "name": "F",
                       "stream_links": []
                     }
@@ -384,11 +277,11 @@
           ]
         },
         {
-          "id": "tieulam-8cbe9785ca34",
-          "name": "⚽ Sutherland Sharks vs A.P.I.A. Leichhardt | NSW PREMIER LEAGUE | Hiệp 2: 67'",
-          "tournament": "NSW PREMIER LEAGUE",
-          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/z318q66hoz1qo9j/image/small",
-          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/n54qllh2wn9qvy9/image/small",
+          "id": "tieulam-b83649bbc670",
+          "name": "⚽ Ibv Vestmannaeyjar vs Valur Reykjavik | VĐQG ICELAND | Hiệp 2: 68'",
+          "tournament": "VĐQG ICELAND",
+          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/kn54qllhp3qvy9d/image/small",
+          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/kn54qllhl9wqvy9/image/small",
           "type": "single",
           "display": "thumbnail-only",
           "enable_detail": false,
@@ -396,60 +289,7 @@
             "padding": 1,
             "background_color": "#ececec",
             "display": "contain",
-            "url": "https://imgts.sportpulseapiz.com/football/competition/z318q66hoz1qo9j/image/small",
-            "width": 1600,
-            "height": 1200
-          },
-          "labels": [
-            {
-              "text": "● Live",
-              "position": "top-left",
-              "color": "#00ffffff",
-              "text_color": "#ff0000"
-            }
-          ],
-          "sources": [
-            {
-              "id": "tieulam-8cbe9785ca34",
-              "name": "Tiếu Lâm (Xoilac)",
-              "contents": [
-                {
-                  "id": "tieulam-8cbe9785ca34",
-                  "name": "Sutherland Sharks vs A.P.I.A. Leichhardt",
-                  "streams": [
-                    {
-                      "id": "tieulam-8cbe9785ca34",
-                      "name": "F",
-                      "stream_links": [
-                        {
-                          "id": "lnk-82c32e18ab",
-                          "name": "🎙️ WC 2026",
-                          "type": "flv",
-                          "default": true,
-                          "url": "https://live3.procdnlive.com/livecdn/channel23.flv?auth_key=3000001783155733-0-0-e96cbe976108ff1251c8ff91fe344db0"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "tieulam-61489979afab",
-          "name": "⚽ White City vs West Adelaide Sc | FFSA PREMIER LEAGUE | Hiệp 2: 69'",
-          "tournament": "FFSA PREMIER LEAGUE",
-          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/kjw2r09hl4yrz84/image/small",
-          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/8yomo4hkv0lq0j6/image/small",
-          "type": "single",
-          "display": "thumbnail-only",
-          "enable_detail": false,
-          "image": {
-            "padding": 1,
-            "background_color": "#ececec",
-            "display": "contain",
-            "url": "https://imgts.sportpulseapiz.com/football/competition/kjw2r09hl4yrz84/image/small",
+            "url": "https://imgts.sportpulseapiz.com/football/competition/kn54qllhp3qvy9d/image/small",
             "width": 1600,
             "height": 1200
           },
@@ -463,15 +303,15 @@
           ],
           "sources": [
             {
-              "id": "tieulam-61489979afab",
+              "id": "tieulam-b83649bbc670",
               "name": "Tiếu Lâm (Xoilac)",
               "contents": [
                 {
-                  "id": "tieulam-61489979afab",
-                  "name": "White City vs West Adelaide Sc",
+                  "id": "tieulam-b83649bbc670",
+                  "name": "Ibv Vestmannaeyjar vs Valur Reykjavik",
                   "streams": [
                     {
-                      "id": "tieulam-61489979afab",
+                      "id": "tieulam-b83649bbc670",
                       "name": "F",
                       "stream_links": []
                     }
@@ -482,11 +322,11 @@
           ]
         },
         {
-          "id": "tieulam-411a25193e85",
-          "name": "⚽ The Cove Fc vs Adelaide Atletico | SOUTH AUSTRALIA STATE LEAGUE 1 | Hiệp 2: 68'",
-          "tournament": "SOUTH AUSTRALIA STATE LEAGUE 1",
-          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/56ypq3nh006md7o/image/small",
-          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/l5ergph35vvr8k0/image/small",
+          "id": "tieulam-c912001da6b2",
+          "name": "⚽ Bryne vs Sandnes Ulf | HẠNG NHẤT NA UY | Hiệp 2: 66'",
+          "tournament": "HẠNG NHẤT NA UY",
+          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlh73ryk0j/image/small",
+          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/gy0or5jhy50qwzv/image/small",
           "type": "single",
           "display": "thumbnail-only",
           "enable_detail": false,
@@ -494,7 +334,7 @@
             "padding": 1,
             "background_color": "#ececec",
             "display": "contain",
-            "url": "https://imgts.sportpulseapiz.com/football/competition/56ypq3nh006md7o/image/small",
+            "url": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlh73ryk0j/image/small",
             "width": 1600,
             "height": 1200
           },
@@ -508,15 +348,15 @@
           ],
           "sources": [
             {
-              "id": "tieulam-411a25193e85",
+              "id": "tieulam-c912001da6b2",
               "name": "Tiếu Lâm (Xoilac)",
               "contents": [
                 {
-                  "id": "tieulam-411a25193e85",
-                  "name": "The Cove Fc vs Adelaide Atletico",
+                  "id": "tieulam-c912001da6b2",
+                  "name": "Bryne vs Sandnes Ulf",
                   "streams": [
                     {
-                      "id": "tieulam-411a25193e85",
+                      "id": "tieulam-c912001da6b2",
                       "name": "F",
                       "stream_links": []
                     }
@@ -527,11 +367,11 @@
           ]
         },
         {
-          "id": "tieulam-cc10d7d3768e",
-          "name": "⚽ Monaro Panthers vs Brindabella Blues Fc | CAPITAL NPL 1 | Hiệp 2: 57'",
-          "tournament": "CAPITAL NPL 1",
-          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/kdj2ryohkvzq1zp/image/small",
-          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/y39mp1h5jl7mojx/image/small",
+          "id": "tieulam-b057f7b38939",
+          "name": "⚽ Slask Wroclaw vs Chrobry Glogow | GIAO HỮU CLB | Hiệp 2: 64'",
+          "tournament": "GIAO HỮU CLB",
+          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlhgpryk0j/image/small",
+          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/9dn1m1ghz1omoep/image/small",
           "type": "single",
           "display": "thumbnail-only",
           "enable_detail": false,
@@ -539,7 +379,7 @@
             "padding": 1,
             "background_color": "#ececec",
             "display": "contain",
-            "url": "https://imgts.sportpulseapiz.com/football/competition/kdj2ryohkvzq1zp/image/small",
+            "url": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlhgpryk0j/image/small",
             "width": 1600,
             "height": 1200
           },
@@ -553,15 +393,195 @@
           ],
           "sources": [
             {
-              "id": "tieulam-cc10d7d3768e",
+              "id": "tieulam-b057f7b38939",
               "name": "Tiếu Lâm (Xoilac)",
               "contents": [
                 {
-                  "id": "tieulam-cc10d7d3768e",
-                  "name": "Monaro Panthers vs Brindabella Blues Fc",
+                  "id": "tieulam-b057f7b38939",
+                  "name": "Slask Wroclaw vs Chrobry Glogow",
                   "streams": [
                     {
-                      "id": "tieulam-cc10d7d3768e",
+                      "id": "tieulam-b057f7b38939",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "tieulam-5a1730766a25",
+          "name": "⚽ Nk Varteks Varazdin vs Cska 1948 Sofia | GIAO HỮU CLB | Hiệp 2: 67'",
+          "tournament": "GIAO HỮU CLB",
+          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlhgpryk0j/image/small",
+          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/z318q66hpl0qo9j/image/small",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlhgpryk0j/image/small",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "🔴 Chờ stream",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "tieulam-5a1730766a25",
+              "name": "Tiếu Lâm (Xoilac)",
+              "contents": [
+                {
+                  "id": "tieulam-5a1730766a25",
+                  "name": "Nk Varteks Varazdin vs Cska 1948 Sofia",
+                  "streams": [
+                    {
+                      "id": "tieulam-5a1730766a25",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "tieulam-ca86d45b43ff",
+          "name": "⚽ Kickers Emden vs St. Pauli | GIAO HỮU CLB | Hiệp 2: 65'",
+          "tournament": "GIAO HỮU CLB",
+          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlhgpryk0j/image/small",
+          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/jw2r09hllz9rz84/image/small",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlhgpryk0j/image/small",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "🔴 Chờ stream",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "tieulam-ca86d45b43ff",
+              "name": "Tiếu Lâm (Xoilac)",
+              "contents": [
+                {
+                  "id": "tieulam-ca86d45b43ff",
+                  "name": "Kickers Emden vs St. Pauli",
+                  "streams": [
+                    {
+                      "id": "tieulam-ca86d45b43ff",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "tieulam-fdda9cdc4102",
+          "name": "⚽ Lechia Zielona Gora vs Miedz Legnica | GIAO HỮU CLB | Hiệp 2: 75'",
+          "tournament": "GIAO HỮU CLB",
+          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlhgpryk0j/image/small",
+          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/23xmvkh348xqg8n/image/small",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlhgpryk0j/image/small",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "🔴 Chờ stream",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "tieulam-fdda9cdc4102",
+              "name": "Tiếu Lâm (Xoilac)",
+              "contents": [
+                {
+                  "id": "tieulam-fdda9cdc4102",
+                  "name": "Lechia Zielona Gora vs Miedz Legnica",
+                  "streams": [
+                    {
+                      "id": "tieulam-fdda9cdc4102",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "tieulam-9ff03df18354",
+          "name": "⚽ Olimpija Ljubljana vs Cfr Cluj | GIAO HỮU CLB | Hiệp 2: 67'",
+          "tournament": "GIAO HỮU CLB",
+          "logo_nha": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlhgpryk0j/image/small",
+          "logo_khach": "https://imgts.sportpulseapiz.com/football/team/9vjxm8ghd0wr6od/image/small",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://imgts.sportpulseapiz.com/football/competition/gpxwrxlhgpryk0j/image/small",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "🔴 Chờ stream",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "tieulam-9ff03df18354",
+              "name": "Tiếu Lâm (Xoilac)",
+              "contents": [
+                {
+                  "id": "tieulam-9ff03df18354",
+                  "name": "Olimpija Ljubljana vs Cfr Cluj",
+                  "streams": [
+                    {
+                      "id": "tieulam-9ff03df18354",
                       "name": "F",
                       "stream_links": []
                     }

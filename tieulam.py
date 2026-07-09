@@ -30,8 +30,8 @@ def apply_stealth(page):
 # =========================================================
 # CONFIG XOILAC (CARIBBEAN BUSINESS) -> XUẤT TIEULAM.JSON
 # =========================================================
-TARGET_SITE   = "https://caribbeanbusiness.com/"
-BASE_URL      = "https://caribbeanbusiness.com"
+TARGET_SITE   = "https://xoilaczyyz.tv/"
+BASE_URL      = "https://xoilaczyyz.tv"
 FILE_PATH     = "tieulam.json"
 LIMIT_MATCHES = 12       # Quét 12 trận hot nhất
 MAX_BLV       = 6        # Lấy tối đa 6 BLV mỗi trận

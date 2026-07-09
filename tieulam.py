@@ -28,13 +28,13 @@ def apply_stealth(page):
         pass
 
 # =========================================================
-# CONFIG XOILAC (CARIBBEAN BUSINESS) -> XUẤT TIEULAM.JSON
+# CONFIG XOILAC -> XUẤT TIEULAM.JSON
 # =========================================================
 TARGET_SITE   = "https://xoilaczyyz.tv/"
 BASE_URL      = "https://xoilaczyyz.tv"
 FILE_PATH     = "tieulam.json"
 LIMIT_MATCHES = 12       # Quét 12 trận hot nhất
-MAX_BLV       = 6        # Lấy tối đa 6 BLV mỗi trận
+MAX_BLV       = 3        # Lấy tối đa 3 BLV mỗi trận
 
 VN_TZ = datetime.timezone(datetime.timedelta(hours=7))
 GITHUB_TOKEN = os.getenv("GH_TOKEN")
@@ -72,7 +72,7 @@ def format_xoilac_time(time_str: str) -> str:
         return time_str or "Sắp diễn ra"
 
 # =========================================================
-# JS: TRÍCH XUẤT DANH SÁCH TRẬN ĐẤU TỪ TRANG CHỦ XOILAC
+# JS: TRÍCH XUẤT DANH SÁCH TRẬN ĐẤU (ĐÃ FIX CHUẨN LOGO ĐỘI NHÀ & KHÁCH)
 # =========================================================
 JS_EXTRACT = """
 () => {
@@ -105,12 +105,13 @@ JS_EXTRACT = """
             }
         }
 
+        // 💡 ĐÃ SỬA: Lấy chính xác tuyệt đối Logo đội nhà và đội khách theo class cụ thể
         let homeLogo = '', awayLogo = '';
-        const imgs = card.querySelectorAll('img');
-        if (imgs.length >= 2) {
-            homeLogo = imgs[0].src;
-            awayLogo = imgs[1].src;
-        }
+        const homeImg = card.querySelector('.team-logo-group-home-logo img, [class*="team-home"] img, .team--home img');
+        const awayImg = card.querySelector('.team-logo-group-away-logo img, [class*="team-away"] img, .team--away img');
+        
+        if (homeImg) homeLogo = homeImg.src;
+        if (awayImg) awayLogo = awayImg.src;
 
         const leagueEl = card.querySelector('[class*="league"], span[data-attr]');
         const tournament = leagueEl ? clean(leagueEl.innerText) : 'Bóng Đá';
@@ -132,11 +133,11 @@ JS_EXTRACT = """
 """
 
 # =========================================================
-# CAPTURE STREAM: SĂN BLV (FLV/M3U8)
+# CAPTURE STREAM: SĂN BLV + CHEAT CODE 1 (FLV -> M3U8)
 # =========================================================
 def capture_xoilac_streams(context, match_url: str, global_seen_streams: set) -> list:
     page = context.new_page()
-    apply_stealth(page) # 💡 Đã dùng bộ giáp mới
+    apply_stealth(page)
     
     current_captured = []
     seen_urls = set()
@@ -145,9 +146,11 @@ def capture_xoilac_streams(context, match_url: str, global_seen_streams: set) ->
     def process_url(url):
         u = url.lower()
         if (".flv" in u or ".m3u8" in u) and not any(b in u for b in BAD):
-            if url not in seen_urls and url not in global_seen_streams:
-                seen_urls.add(url)
-                current_captured.append(url)
+            # 💡 CHEAT CODE 1: Tráo đổi đuôi .flv thành .m3u8 để chơi mượt trên SángTV!
+            modified_url = url.replace(".flv", ".m3u8").replace(".FLV", ".m3u8")
+            if modified_url not in seen_urls and modified_url not in global_seen_streams:
+                seen_urls.add(modified_url)
+                current_captured.append(modified_url)
 
     page.on("request",  lambda req: process_url(req.url))
     page.on("response", lambda res: process_url(res.url))
@@ -242,7 +245,8 @@ def build_channel(m: dict, stream_data: list) -> dict:
         stream_links.append({
             "id": make_link_id(),
             "name": s["name"],
-            "type": "flv" if ".flv" in u.lower() else "hls",
+            # 💡 Vì đã dùng Cheat Code 1 ép về .m3u8 nên type lúc nào cũng chuẩn là HLS
+            "type": "hls",
             "default": idx == 0,
             "url": u
         })
@@ -276,7 +280,7 @@ def scrape_and_push():
         browser = p.chromium.launch(headless=True, args=["--no-sandbox", "--disable-setuid-sandbox"])
         context = browser.new_context(viewport={"width": 1920, "height": 1080}, user_agent=_HEADERS["User-Agent"], timezone_id="Asia/Ho_Chi_Minh")
         page = context.new_page()
-        apply_stealth(page) # 💡 Đã dùng bộ giáp mới
+        apply_stealth(page)
 
         try:
             print(f"📺 Đang tải trang chủ {TARGET_SITE}...")

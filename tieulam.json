@@ -1,12 +1,283 @@
 {
-  "id": "tieulam",
-  "name": "Tiếu Lâm TV (Xoilac)",
-  "last_updated": "19:37 10/07/2026",
+  "id": "cakhia",
+  "name": "Cà Khịa TV",
+  "last_updated": "20:31 11/07/2026",
   "groups": [
     {
       "id": "live",
-      "name": "🔴 Live bóng đá Xoilac",
-      "channels": []
+      "name": "🔴 Live bóng đá Cà Khịa",
+      "channels": [
+        {
+          "id": "cakhia-b7400e1b3e25",
+          "name": "⚽ Chengdu Rongcheng vs Chongqing Tonglianglong | CHINESE FOOTBALL SUPER LEAGUE | 19:00 11/07",
+          "tournament": "CHINESE FOOTBALL SUPER LEAGUE",
+          "logo_nha": "https://img.url-api-ck.com/football/team/6ade4c9aaa615702eb7ec459e56d1968.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/5be93c1a6628d27de6d39fde9ea94b7a.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/6ade4c9aaa615702eb7ec459e56d1968.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "Hiệp 2: 74 '",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-b7400e1b3e25",
+              "name": "Cà Khịa TV",
+              "contents": [
+                {
+                  "id": "cakhia-b7400e1b3e25",
+                  "name": "Chengdu Rongcheng vs Chongqing Tonglianglong",
+                  "streams": [
+                    {
+                      "id": "cakhia-b7400e1b3e25",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cakhia-21b41617e301",
+          "name": "⚽ Irtysh Pavlodar vs Zhenis Astana | KAZAKHSTAN PREMIER LEAGUE | 19:00 11/07",
+          "tournament": "KAZAKHSTAN PREMIER LEAGUE",
+          "logo_nha": "https://img.url-api-ck.com/football/team/97bfb8ef2c0abc2fd40185debc8dd497.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/16ccfd6042d1f791302c69eec646e081.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/97bfb8ef2c0abc2fd40185debc8dd497.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "Hiệp 2: 73 '",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-21b41617e301",
+              "name": "Cà Khịa TV",
+              "contents": [
+                {
+                  "id": "cakhia-21b41617e301",
+                  "name": "Irtysh Pavlodar vs Zhenis Astana",
+                  "streams": [
+                    {
+                      "id": "cakhia-21b41617e301",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cakhia-fb75ebb083b6",
+          "name": "⚽ FC Ufa vs FC Leningradets | RUSSIAN FIRST LEAGUE | 19:00 11/07",
+          "tournament": "RUSSIAN FIRST LEAGUE",
+          "logo_nha": "https://img.url-api-ck.com/football/team/bed3e0e7e7677fc51f43b2e6b33dd040.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/c659930080be6bd5532387d5e097c16c.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/bed3e0e7e7677fc51f43b2e6b33dd040.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "Hiệp 2: 73 '",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-fb75ebb083b6",
+              "name": "Cà Khịa TV",
+              "contents": [
+                {
+                  "id": "cakhia-fb75ebb083b6",
+                  "name": "FC Ufa vs FC Leningradets",
+                  "streams": [
+                    {
+                      "id": "cakhia-fb75ebb083b6",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cakhia-c2e954697b11",
+          "name": "⚽ Fredrikstad vs Lillestrom | NORWEGIAN ELITESERIEN | 19:00 11/07",
+          "tournament": "NORWEGIAN ELITESERIEN",
+          "logo_nha": "https://img.url-api-ck.com/football/team/cfbe053bbd9502769f61b889786ace2c.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/f46fa570a21dc0f62e327d211a98ebaa.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/cfbe053bbd9502769f61b889786ace2c.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "Hiệp 2: 70 '",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-c2e954697b11",
+              "name": "Cà Khịa TV",
+              "contents": [
+                {
+                  "id": "cakhia-c2e954697b11",
+                  "name": "Fredrikstad vs Lillestrom",
+                  "streams": [
+                    {
+                      "id": "cakhia-c2e954697b11",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cakhia-942bb7d80435",
+          "name": "⚽ Shenzhen Peng City vs Qingdao West Coast | CHINESE FOOTBALL SUPER LEAGUE | 18:35 11/07",
+          "tournament": "CHINESE FOOTBALL SUPER LEAGUE",
+          "logo_nha": "https://img.url-api-ck.com/football/team/b982f4d4215ea40ad21d589498140a56.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/383d42e0d0843463b538bc3367d0c4c9.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/b982f4d4215ea40ad21d589498140a56.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "Hiệp 2: 90+ '",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-942bb7d80435",
+              "name": "Cà Khịa TV",
+              "contents": [
+                {
+                  "id": "cakhia-942bb7d80435",
+                  "name": "Shenzhen Peng City vs Qingdao West Coast",
+                  "streams": [
+                    {
+                      "id": "cakhia-942bb7d80435",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cakhia-9d4cd275588e",
+          "name": "⚽ FC Zhetysu Taldykorgan vs Altay FK | KAZAKHSTAN PREMIER LEAGUE | 20:00 11/07",
+          "tournament": "KAZAKHSTAN PREMIER LEAGUE",
+          "logo_nha": "https://img.url-api-ck.com/football/team/d170d88f6e60eeee57486405474e1f9f.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/96717524f82fb5d1366bd0d22c485956.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/d170d88f6e60eeee57486405474e1f9f.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "Hiệp 1: 31 '",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-9d4cd275588e",
+              "name": "Cà Khịa TV",
+              "contents": [
+                {
+                  "id": "cakhia-9d4cd275588e",
+                  "name": "FC Zhetysu Taldykorgan vs Altay FK",
+                  "streams": [
+                    {
+                      "id": "cakhia-9d4cd275588e",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

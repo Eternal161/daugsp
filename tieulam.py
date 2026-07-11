@@ -60,7 +60,7 @@ def get_final_logo(team_name: str, site_logo: str) -> str:
     return f"https://ui-avatars.com/api/?name={initials}&size=200&background=1565C0&color=ffffff&bold=true"
 
 # =========================================================
-# JS: EXTRACT DATA (ĐÃ FIX LỖI TÌM TRẬN CỦA CÀ KHỊA)
+# JS: EXTRACT DATA
 # =========================================================
 JS_EXTRACT = r"""
 () => {
@@ -70,21 +70,17 @@ JS_EXTRACT = r"""
     const getText = el => clean(el ? (el.innerText || el.textContent || '') : '');
     const getSrc = img => img ? (img.currentSrc || img.src || img.getAttribute('src') || '') : '';
 
-    // 💡 LỖI CHÍNH Ở ĐÂY: Cà khịa dùng /truc_tiep/ (dấu gạch dưới)
     const anchors = Array.from(document.querySelectorAll('a[href*="/truc_tiep/"], a[href*="/truc-tiep/"]'));
 
     for (const a of anchors) {
         const href = new URL(a.getAttribute('href'), location.origin).href;
         
-        // 💡 Cấu trúc HTML của Cà Khịa là class w-4/12 cho 2 cột đội bóng
         let teamCols = Array.from(a.querySelectorAll('div')).filter(el => {
             const cls = String(el.className || '');
             return cls.includes('w-4/12') && el.querySelector('img') && el.querySelector('p');
         });
 
-        // Nếu không có 2 cột này -> Đây là thẻ vớ vẩn hoặc banner Auto-play -> Bỏ qua
         if (teamCols.length < 2) continue;
-
         if (seen.has(href)) continue;
         seen.add(href);
 
@@ -135,7 +131,10 @@ JS_EXTRACT = r"""
 }
 """
 
-def lay_flv_spa(page, url_path):
+# =========================================================
+# LƯỚI QUÉT FLV SPA (TỨ TRỤ BẮT LINK)
+# =========================================================
+def lay_flv_spa(page, url_path, slug, home_name):
     link_stream = ""
     page.evaluate("window.__botFlvLinks = [];")
     
@@ -151,28 +150,73 @@ def lay_flv_spa(page, url_path):
     page.on("response", handle_response)
     
     try:
-        page.evaluate(f'''([path]) => {{
-            let link = document.querySelector(`a[href="${{path}}"]`) || document.querySelector(`a[href*="${{path.split('/').pop()}}"]`);
-            if (link) link.click();
-            else window.location.href = path;
-        }}''', [url_path])
+        # 💡 Ưu tiên 1: Click chính xác thẻ của Đội Nhà để mô phỏng người thật chuẩn 100%
+        page.evaluate(f'''([slugText, homeText, fallbackPath]) => {{
+            let link = document.querySelector(`a[href*="${{slugText}}"]`);
+            if (!link) {{
+                // Nếu đường dẫn bị mã hóa, tìm thẻ <a> chứa tên Đội Nhà
+                link = Array.from(document.querySelectorAll('a')).find(a => a.innerText.includes(homeText) && a.href.includes('truc_tiep'));
+            }}
+            
+            if (link) {{
+                link.click();
+            }} else if (window.$nuxt && window.$nuxt.$router) {{
+                // Fallback Nuxt
+                window.$nuxt.$router.push(fallbackPath);
+            }}
+        }}''', [slug, home_name, url_path])
         
-        deadline = time.time() + 6.0
+        # Đợi vào phòng và load Player
+        page.wait_for_timeout(3000)
+        
+        # Click giữa màn hình mồi video chạy
+        try: page.mouse.click(640, 360)
+        except: pass
+        
+        deadline = time.time() + 8.0
         while time.time() < deadline:
+            # 1. Quét Network
             if link_stream: 
                 print(f"      🎯 [Network] Tóm được FLV: {link_stream[:60]}...")
                 break
             
+            # 2. Quét kho JS Inject
             bot_links = page.evaluate("window.__botFlvLinks || []")
             if bot_links and len(bot_links) > 0:
                 link_stream = bot_links[-1]
                 print(f"      🎯 [JS Inject] Trộm được FLV từ API: {link_stream[:60]}...")
                 break
                 
+            # 3. Lục soát NUXT Cache
+            nuxt_data = page.evaluate("window.__NUXT__ ? JSON.stringify(window.__NUXT__) : ''")
+            if nuxt_data:
+                flv_match = re.search(r'https?:\/\/[^"\'\s<>]+?\.flv(?:\?[^"\'\s<>]*)?', nuxt_data)
+                if flv_match and "quangcao" not in flv_match.group(0).lower():
+                    link_stream = flv_match.group(0).replace('\\/', '/')
+                    print(f"      ⚡ [NUXT Cache] Bóc được FLV: {link_stream[:60]}...")
+                    break
+                    
+            # 4. Khoan cắt Bê tông (Iframe)
+            for frame in page.frames:
+                try:
+                    f_url = frame.url
+                    if ".flv" in f_url and "quangcao" not in f_url:
+                        link_stream = f_url
+                        print(f"      ⚡ [Iframe URL] Bóc được FLV: {link_stream[:60]}...")
+                        break
+                    f_html = frame.content()
+                    flv_match = re.search(r'https?:\/\/[^"\'\s<>]+?\.flv(?:\?[^"\'\s<>]*)?', f_html)
+                    if flv_match and "quangcao" not in flv_match.group(0).lower():
+                        link_stream = flv_match.group(0).replace('\\/', '/')
+                        print(f"      ⚡ [Iframe HTML] Bóc được FLV: {link_stream[:60]}...")
+                        break
+                except: pass
+            
+            if link_stream: break
             time.sleep(0.5)
             
     except Exception as e:
-        print(f"      ⚠️ Lỗi chuyển trang: {e}")
+        print(f"      ⚠️ Lỗi xử lý click/quét: {e}")
     finally:
         try: page.remove_listener("response", handle_response)
         except: pass
@@ -203,6 +247,7 @@ def scrape_and_push() -> None:
         page = context.new_page()
         apply_stealth(page)
 
+        # Tiêm mã độc vào lõi chặn JS Fetch
         js_interceptor = r"""
         window.__botFlvLinks = [];
         const origFetch = window.fetch;
@@ -272,21 +317,24 @@ def scrape_and_push() -> None:
             
             for href, blv_name in match["hrefs_and_blvs"]:
                 url_path = href.replace(TARGET_SITE, "") if href.startswith(TARGET_SITE) else href
+                slug = url_path.split("/")[-1].split("?")[0] # Bóc Slug sạch sẽ
                 
+                # 💡 An toàn 100%: Lùi lại trang chủ trước khi click trận tiếp theo
                 if TARGET_SITE not in page.url or len(page.url) > len(TARGET_SITE) + 5:
                     page.goto(TARGET_SITE, wait_until="domcontentloaded")
                     page.wait_for_timeout(1500)
                 
                 print(f"      > Đang Click ảo vào BLV: {blv_name}...")
-                flv_link = lay_flv_spa(page, url_path)
+                flv_link = lay_flv_spa(page, url_path, slug, match['home'])
                 
                 if flv_link:
                     all_match_streams.append({"name": blv_name, "url": flv_link})
                 else:
-                    print("         ❌ Lướt qua không thấy link.")
+                    print("         ❌ Lục tung phòng xem không thấy link.")
                     
+                # Load lại Trang chủ để reset Nuxt
                 try: 
-                    page.evaluate("window.history.back()")
+                    page.goto(TARGET_SITE, wait_until="domcontentloaded")
                     page.wait_for_timeout(1000)
                 except: pass
 

@@ -1,12 +1,102 @@
 {
   "id": "cakhia",
   "name": "Cà Khịa TV",
-  "last_updated": "20:31 11/07/2026",
+  "last_updated": "20:37 11/07/2026",
   "groups": [
     {
       "id": "live",
       "name": "🔴 Live bóng đá Cà Khịa",
       "channels": [
+        {
+          "id": "cakhia-04f32163c1d2",
+          "name": "⚽ FC Zhetysu Taldykorgan vs Altay FK | KAZAKHSTAN PREMIER LEAGUE | 20:00 11/07",
+          "tournament": "KAZAKHSTAN PREMIER LEAGUE",
+          "logo_nha": "https://img.url-api-ck.com/football/team/d170d88f6e60eeee57486405474e1f9f.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/96717524f82fb5d1366bd0d22c485956.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/d170d88f6e60eeee57486405474e1f9f.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "Hiệp 1: 38 '",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-04f32163c1d2",
+              "name": "Cà Khịa TV",
+              "contents": [
+                {
+                  "id": "cakhia-04f32163c1d2",
+                  "name": "FC Zhetysu Taldykorgan vs Altay FK",
+                  "streams": [
+                    {
+                      "id": "cakhia-04f32163c1d2",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cakhia-1e6724a19aa8",
+          "name": "⚽ Lahti vs HJK Helsinki | FINNISH VEIKKAUSLIIGA | 19:00 11/07",
+          "tournament": "FINNISH VEIKKAUSLIIGA",
+          "logo_nha": "https://img.url-api-ck.com/football/team/0ab1b8407086bab060a396f244a28cd6.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/fd1a9c51505300dec9c26e5847114851.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/0ab1b8407086bab060a396f244a28cd6.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "Hiệp 2: 76 '",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-1e6724a19aa8",
+              "name": "Cà Khịa TV",
+              "contents": [
+                {
+                  "id": "cakhia-1e6724a19aa8",
+                  "name": "Lahti vs HJK Helsinki",
+                  "streams": [
+                    {
+                      "id": "cakhia-1e6724a19aa8",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
         {
           "id": "cakhia-b7400e1b3e25",
           "name": "⚽ Chengdu Rongcheng vs Chongqing Tonglianglong | CHINESE FOOTBALL SUPER LEAGUE | 19:00 11/07",
@@ -26,7 +116,7 @@
           },
           "labels": [
             {
-              "text": "Hiệp 2: 74 '",
+              "text": "Hiệp 2: 80 '",
               "position": "top-left",
               "color": "#00ffffff",
               "text_color": "#ff6600"
@@ -71,7 +161,7 @@
           },
           "labels": [
             {
-              "text": "Hiệp 2: 73 '",
+              "text": "Hiệp 2: 79 '",
               "position": "top-left",
               "color": "#00ffffff",
               "text_color": "#ff6600"
@@ -116,7 +206,7 @@
           },
           "labels": [
             {
-              "text": "Hiệp 2: 73 '",
+              "text": "Hiệp 2: 78 '",
               "position": "top-left",
               "color": "#00ffffff",
               "text_color": "#ff6600"
@@ -161,7 +251,7 @@
           },
           "labels": [
             {
-              "text": "Hiệp 2: 70 '",
+              "text": "Hiệp 2: 76 '",
               "position": "top-left",
               "color": "#00ffffff",
               "text_color": "#ff6600"
@@ -178,96 +268,6 @@
                   "streams": [
                     {
                       "id": "cakhia-c2e954697b11",
-                      "name": "F",
-                      "stream_links": []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "cakhia-942bb7d80435",
-          "name": "⚽ Shenzhen Peng City vs Qingdao West Coast | CHINESE FOOTBALL SUPER LEAGUE | 18:35 11/07",
-          "tournament": "CHINESE FOOTBALL SUPER LEAGUE",
-          "logo_nha": "https://img.url-api-ck.com/football/team/b982f4d4215ea40ad21d589498140a56.png",
-          "logo_khach": "https://img.url-api-ck.com/football/team/383d42e0d0843463b538bc3367d0c4c9.png",
-          "type": "single",
-          "display": "thumbnail-only",
-          "enable_detail": false,
-          "image": {
-            "padding": 1,
-            "background_color": "#ececec",
-            "display": "contain",
-            "url": "https://img.url-api-ck.com/football/team/b982f4d4215ea40ad21d589498140a56.png",
-            "width": 1600,
-            "height": 1200
-          },
-          "labels": [
-            {
-              "text": "Hiệp 2: 90+ '",
-              "position": "top-left",
-              "color": "#00ffffff",
-              "text_color": "#ff6600"
-            }
-          ],
-          "sources": [
-            {
-              "id": "cakhia-942bb7d80435",
-              "name": "Cà Khịa TV",
-              "contents": [
-                {
-                  "id": "cakhia-942bb7d80435",
-                  "name": "Shenzhen Peng City vs Qingdao West Coast",
-                  "streams": [
-                    {
-                      "id": "cakhia-942bb7d80435",
-                      "name": "F",
-                      "stream_links": []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "cakhia-9d4cd275588e",
-          "name": "⚽ FC Zhetysu Taldykorgan vs Altay FK | KAZAKHSTAN PREMIER LEAGUE | 20:00 11/07",
-          "tournament": "KAZAKHSTAN PREMIER LEAGUE",
-          "logo_nha": "https://img.url-api-ck.com/football/team/d170d88f6e60eeee57486405474e1f9f.png",
-          "logo_khach": "https://img.url-api-ck.com/football/team/96717524f82fb5d1366bd0d22c485956.png",
-          "type": "single",
-          "display": "thumbnail-only",
-          "enable_detail": false,
-          "image": {
-            "padding": 1,
-            "background_color": "#ececec",
-            "display": "contain",
-            "url": "https://img.url-api-ck.com/football/team/d170d88f6e60eeee57486405474e1f9f.png",
-            "width": 1600,
-            "height": 1200
-          },
-          "labels": [
-            {
-              "text": "Hiệp 1: 31 '",
-              "position": "top-left",
-              "color": "#00ffffff",
-              "text_color": "#ff6600"
-            }
-          ],
-          "sources": [
-            {
-              "id": "cakhia-9d4cd275588e",
-              "name": "Cà Khịa TV",
-              "contents": [
-                {
-                  "id": "cakhia-9d4cd275588e",
-                  "name": "FC Zhetysu Taldykorgan vs Altay FK",
-                  "streams": [
-                    {
-                      "id": "cakhia-9d4cd275588e",
                       "name": "F",
                       "stream_links": []
                     }

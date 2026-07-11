@@ -7,6 +7,7 @@ import html
 import hashlib
 import datetime
 from urllib.parse import urljoin
+import requests
 from github import Github
 from playwright.sync_api import sync_playwright
 
@@ -24,11 +25,11 @@ def apply_stealth(page):
         pass
 
 # =========================================================
-# CONFIG CÀ KHỊA TV - CHIẾN THUẬT SPA ROUTING
+# CONFIG CÀ KHỊA TV
 # =========================================================
 TARGET_SITE = "https://cakhia17.site/"
 BASE_URL = "https://cakhia17.site"
-FILE_PATH = "tieulam.json" # Lưu trùng tên với code Sáng TV của bạn
+FILE_PATH = "tieulam.json" 
 LIMIT_MATCHES = 15
 
 VN_TZ = datetime.timezone(datetime.timedelta(hours=7))
@@ -43,9 +44,6 @@ _HEADERS = {
     ),
 }
 
-# =========================================================
-# HELPER
-# =========================================================
 def make_id(seed: str = "") -> str:
     h = hashlib.md5((seed or str(uuid.uuid4())).encode()).hexdigest()
     return f"cakhia-{h[:12]}"
@@ -56,8 +54,13 @@ def make_link_id() -> str:
 def clean_text(value: str) -> str:
     return re.sub(r"\s+", " ", value or "").strip()
 
+def get_final_logo(team_name: str, site_logo: str) -> str:
+    if site_logo and site_logo.startswith("http"): return site_logo
+    initials = requests.utils.quote(team_name[:2] if len(team_name) >= 2 else "FC")
+    return f"https://ui-avatars.com/api/?name={initials}&size=200&background=1565C0&color=ffffff&bold=true"
+
 # =========================================================
-# JS: EXTRACT DATA - BỎ QUA TRẬN TRÊN CÙNG
+# JS: EXTRACT DATA (ĐÃ FIX LỖI TÌM TRẬN CỦA CÀ KHỊA)
 # =========================================================
 JS_EXTRACT = r"""
 () => {
@@ -67,14 +70,20 @@ JS_EXTRACT = r"""
     const getText = el => clean(el ? (el.innerText || el.textContent || '') : '');
     const getSrc = img => img ? (img.currentSrc || img.src || img.getAttribute('src') || '') : '';
 
-    const anchors = Array.from(document.querySelectorAll('a[href*="/truc-tiep/"]'));
+    // 💡 LỖI CHÍNH Ở ĐÂY: Cà khịa dùng /truc_tiep/ (dấu gạch dưới)
+    const anchors = Array.from(document.querySelectorAll('a[href*="/truc_tiep/"], a[href*="/truc-tiep/"]'));
 
     for (const a of anchors) {
         const href = new URL(a.getAttribute('href'), location.origin).href;
         
-        // 💡 BỎ QUA TRẬN TỰ PHÁT TRÊN ĐẦU TRANG: Trận thật luôn nằm trong grid chứa 2 đội
-        const gridBox = a.querySelector('div[class*="grid-cols-[1fr_auto_1fr]"]');
-        if (!gridBox || gridBox.children.length < 3) continue;
+        // 💡 Cấu trúc HTML của Cà Khịa là class w-4/12 cho 2 cột đội bóng
+        let teamCols = Array.from(a.querySelectorAll('div')).filter(el => {
+            const cls = String(el.className || '');
+            return cls.includes('w-4/12') && el.querySelector('img') && el.querySelector('p');
+        });
+
+        // Nếu không có 2 cột này -> Đây là thẻ vớ vẩn hoặc banner Auto-play -> Bỏ qua
+        if (teamCols.length < 2) continue;
 
         if (seen.has(href)) continue;
         seen.add(href);
@@ -82,15 +91,13 @@ JS_EXTRACT = r"""
         const card = a.closest('div[class*="rounded-lg"][class*="border"]') || a.parentElement || a;
 
         let home = '', away = '', homeLogo = '', awayLogo = '';
-        const homeSpan = gridBox.children[0].querySelector('span.truncate, p');
-        const awaySpan = gridBox.children[2].querySelector('span.truncate, p');
-        if (homeSpan) home = getText(homeSpan);
-        if (awaySpan) away = getText(awaySpan);
+        const homeCol = teamCols[0];
+        const awayCol = teamCols[teamCols.length - 1];
         
-        const imgNha = gridBox.children[0].querySelector('img');
-        const imgKhach = gridBox.children[2].querySelector('img');
-        if (imgNha) homeLogo = getSrc(imgNha);
-        if (imgKhach) awayLogo = getSrc(imgKhach);
+        home = getText(homeCol.querySelector('p'));
+        away = getText(awayCol.querySelector('p'));
+        homeLogo = getSrc(homeCol.querySelector('img'));
+        awayLogo = getSrc(awayCol.querySelector('img'));
 
         const aText = getText(a);
         const cardText = getText(card);
@@ -106,17 +113,16 @@ JS_EXTRACT = r"""
         const statusLine = cardLines.find(t => /^(hiệp|nghỉ giữa hiệp|sắp diễn ra|chưa bắt đầu|đang diễn ra|live|ft|ht)/i.test(t));
         if (statusLine) status = statusLine;
 
-        // Bóc giải đấu (Thường là thẻ text nhỏ trên cùng của card)
         let tournament = '';
         const smallTexts = Array.from(card.querySelectorAll('div,span,p')).map(getText).filter(t => t.length > 2 && t.length < 50);
         for(const t of smallTexts) {
-            if (t !== home && t !== away && !t.includes(':') && !t.toLowerCase().includes('blv')) {
+            if (t !== home && t !== away && !t.includes(':') && !/blv|bình luận/i.test(t) && !/hiệp|live|ht|ft/i.test(t)) {
                 tournament = t; break;
             }
         }
 
-        // Bóc BLV
-        let blvName = cardLines.find(t => /\b(BLV|bình luận viên)\b/i.test(t)) || 'Cà Khịa';
+        let blvName = cardLines.find(t => /\b(BLV|bình luận viên|Giàng A|Leo)\b/i.test(t)) || 'Cà Khịa';
+        blvName = blvName.replace(/Đặt cược/gi, '').trim();
 
         const lower = cardText.toLowerCase();
         const isLiveUI = Boolean(scoreStr) || /hiệp|nghỉ giữa hiệp|đang diễn ra|\blive\b/.test(lower);
@@ -131,16 +137,13 @@ JS_EXTRACT = r"""
 
 def lay_flv_spa(page, url_path):
     link_stream = ""
-    
-    # 💡 LÀM SẠCH KHO CHỨA LINK TRƯỚC MỖI TRẬN
-    page.evaluate("window.__botFlvLinks = []; window.__botApis = [];")
+    page.evaluate("window.__botFlvLinks = [];")
     
     def handle_response(response):
         nonlocal link_stream
         if link_stream: return
         try:
             req_url = response.url.lower()
-            # Bắt link flv thô rớt ra mạng
             if ".flv" in req_url and "expire=" in req_url and "quangcao" not in req_url:
                 link_stream = response.url
         except: pass
@@ -148,21 +151,18 @@ def lay_flv_spa(page, url_path):
     page.on("response", handle_response)
     
     try:
-        # 💡 CLICK ẢO ĐỂ LÁCH 404 (Không mở tab mới)
         page.evaluate(f'''([path]) => {{
             let link = document.querySelector(`a[href="${{path}}"]`) || document.querySelector(`a[href*="${{path.split('/').pop()}}"]`);
             if (link) link.click();
             else window.location.href = path;
         }}''', [url_path])
         
-        # CHỜ VÀ ÉP LẤY LINK FLV
         deadline = time.time() + 6.0
         while time.time() < deadline:
             if link_stream: 
                 print(f"      🎯 [Network] Tóm được FLV: {link_stream[:60]}...")
                 break
             
-            # Lôi kho tàng JS Hack ra kiểm tra
             bot_links = page.evaluate("window.__botFlvLinks || []")
             if bot_links and len(bot_links) > 0:
                 link_stream = bot_links[-1]
@@ -203,7 +203,6 @@ def scrape_and_push() -> None:
         page = context.new_page()
         apply_stealth(page)
 
-        # 💡 TIÊM MÃ ĐỘC VÀO LÕI TRÌNH DUYỆT ĐỂ BẮT MỌI GÓI API CHỨA ĐUÔI .FLV
         js_interceptor = r"""
         window.__botFlvLinks = [];
         const origFetch = window.fetch;
@@ -212,7 +211,6 @@ def scrape_and_push() -> None:
             try { 
                 response.clone().text().then(text => {
                     const clean = text.replace(/\\\//g, '/');
-                    // Bắt trọn ổ link FLV có chứa query expire & sign
                     const flvMatch = clean.match(/https?:\/\/[^"'\s<>]+?\.flv(?:\?[^"'\s<>]*)?/i);
                     if (flvMatch && !flvMatch[0].includes('quangcao')) {
                         window.__botFlvLinks.push(flvMatch[0]);
@@ -231,7 +229,6 @@ def scrape_and_push() -> None:
         except Exception as exc:
             print(f"   ❌ Lỗi mở trang: {exc}")
 
-        # Cuộn trang nhẹ nhàng để tải các trận bên dưới
         try:
             page.mouse.wheel(0, 800)
             page.wait_for_timeout(1000)
@@ -245,7 +242,6 @@ def scrape_and_push() -> None:
             browser.close()
             return
 
-        # Gộp trận
         grouped_matches = {}
         for match in raw_matches:
             home = clean_text(match.get("home", ""))
@@ -275,11 +271,10 @@ def scrape_and_push() -> None:
             all_match_streams = []
             
             for href, blv_name in match["hrefs_and_blvs"]:
-                url_path = href.replace(TARGET_URL, "") if href.startswith(TARGET_URL) else href
+                url_path = href.replace(TARGET_SITE, "") if href.startswith(TARGET_SITE) else href
                 
-                # An toàn: Đứng ở trang chủ trước khi click
-                if TARGET_URL not in page.url or len(page.url) > len(TARGET_URL) + 5:
-                    page.goto(TARGET_URL, wait_until="domcontentloaded")
+                if TARGET_SITE not in page.url or len(page.url) > len(TARGET_SITE) + 5:
+                    page.goto(TARGET_SITE, wait_until="domcontentloaded")
                     page.wait_for_timeout(1500)
                 
                 print(f"      > Đang Click ảo vào BLV: {blv_name}...")
@@ -290,13 +285,11 @@ def scrape_and_push() -> None:
                 else:
                     print("         ❌ Lướt qua không thấy link.")
                     
-                # Cào xong lùi lại trang chủ
                 try: 
                     page.evaluate("window.history.back()")
                     page.wait_for_timeout(1000)
                 except: pass
 
-            # ================= BUILD JSON =================
             title_clean = f"{match['home']} vs {match['away']}"
             display_name = f"⚽ {title_clean} | {match.get('tournament', '')} | {match.get('timeStr', '')}"
             cid = make_id(match["href"])
@@ -342,7 +335,6 @@ def scrape_and_push() -> None:
 
         browser.close()
 
-    # Đẩy lên GitHub
     if GITHUB_TOKEN:
         payload = {
             "id": "cakhia", "name": "Cà Khịa TV", "last_updated": now_str,

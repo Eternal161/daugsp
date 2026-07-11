@@ -133,11 +133,17 @@ JS_EXTRACT = r"""
 
 # =========================================================
 # LƯỚI QUÉT FLV SPA (TỨ TRỤ BẮT LINK)
+# FIX: Điều hướng thẳng bằng page.goto(full_href) thay vì click ảo,
+# vì href đã lấy sẵn từ trang chủ nên không cần mô phỏng click/router
+# (nhánh else-if window.$nuxt trước đây có thể không chạy nếu site
+# dùng Nuxt 3 hoặc cấu trúc router khác, khiến trang không điều hướng
+# đi đâu cả -> không bao giờ bắt được FLV dù metadata vẫn đọc được
+# từ trang chủ).
 # =========================================================
-def lay_flv_spa(page, url_path, slug, home_name):
+def lay_flv_spa(page, full_href, index_label=""):
     link_stream = ""
     page.evaluate("window.__botFlvLinks = [];")
-    
+
     def handle_response(response):
         nonlocal link_stream
         if link_stream: return
@@ -148,45 +154,33 @@ def lay_flv_spa(page, url_path, slug, home_name):
         except: pass
 
     page.on("response", handle_response)
-    
+
     try:
-        # 💡 Ưu tiên 1: Click chính xác thẻ của Đội Nhà để mô phỏng người thật chuẩn 100%
-        page.evaluate(f'''([slugText, homeText, fallbackPath]) => {{
-            let link = document.querySelector(`a[href*="${{slugText}}"]`);
-            if (!link) {{
-                // Nếu đường dẫn bị mã hóa, tìm thẻ <a> chứa tên Đội Nhà
-                link = Array.from(document.querySelectorAll('a')).find(a => a.innerText.includes(homeText) && a.href.includes('truc_tiep'));
-            }}
-            
-            if (link) {{
-                link.click();
-            }} else if (window.$nuxt && window.$nuxt.$router) {{
-                // Fallback Nuxt
-                window.$nuxt.$router.push(fallbackPath);
-            }}
-        }}''', [slug, home_name, url_path])
-        
+        print(f"      [DEBUG] Điều hướng trực tiếp tới: {full_href}")
+        page.goto(full_href, wait_until="domcontentloaded", timeout=20_000)
+        print(f"      [DEBUG] URL sau goto: {page.url}")
+
         # Đợi vào phòng và load Player
         page.wait_for_timeout(3000)
-        
-        # Click giữa màn hình mồi video chạy
+
+        # Click giữa màn hình mồi video chạy (một số player cần 1 lần "tương tác")
         try: page.mouse.click(640, 360)
         except: pass
-        
-        deadline = time.time() + 8.0
+
+        deadline = time.time() + 15.0  # tăng từ 8s -> 15s để loại trừ do timing
         while time.time() < deadline:
             # 1. Quét Network
-            if link_stream: 
+            if link_stream:
                 print(f"      🎯 [Network] Tóm được FLV: {link_stream[:60]}...")
                 break
-            
+
             # 2. Quét kho JS Inject
             bot_links = page.evaluate("window.__botFlvLinks || []")
             if bot_links and len(bot_links) > 0:
                 link_stream = bot_links[-1]
                 print(f"      🎯 [JS Inject] Trộm được FLV từ API: {link_stream[:60]}...")
                 break
-                
+
             # 3. Lục soát NUXT Cache
             nuxt_data = page.evaluate("window.__NUXT__ ? JSON.stringify(window.__NUXT__) : ''")
             if nuxt_data:
@@ -195,7 +189,7 @@ def lay_flv_spa(page, url_path, slug, home_name):
                     link_stream = flv_match.group(0).replace('\\/', '/')
                     print(f"      ⚡ [NUXT Cache] Bóc được FLV: {link_stream[:60]}...")
                     break
-                    
+
             # 4. Khoan cắt Bê tông (Iframe)
             for frame in page.frames:
                 try:
@@ -211,16 +205,24 @@ def lay_flv_spa(page, url_path, slug, home_name):
                         print(f"      ⚡ [Iframe HTML] Bóc được FLV: {link_stream[:60]}...")
                         break
                 except: pass
-            
+
             if link_stream: break
             time.sleep(0.5)
-            
+
+        if not link_stream:
+            # Debug cuối cùng nếu vẫn fail: chụp screenshot + log console để soi nguyên nhân
+            try:
+                page.screenshot(path=f"debug_fail_{index_label}.png")
+                print(f"      [DEBUG] Đã lưu debug_fail_{index_label}.png để soi lý do fail")
+            except Exception as se:
+                print(f"      [DEBUG] Không chụp được screenshot: {se}")
+
     except Exception as e:
-        print(f"      ⚠️ Lỗi xử lý click/quét: {e}")
+        print(f"      ⚠️ Lỗi xử lý goto/quét: {e}")
     finally:
         try: page.remove_listener("response", handle_response)
         except: pass
-        
+
     return link_stream
 
 def scrape_and_push() -> None:
@@ -246,6 +248,10 @@ def scrape_and_push() -> None:
         )
         page = context.new_page()
         apply_stealth(page)
+
+        # Ghi lại console/pageerror để debug SPA nếu cần
+        page.on("console", lambda msg: print(f"      [console:{msg.type}] {msg.text}") if msg.type == "error" else None)
+        page.on("pageerror", lambda err: print(f"      [pageerror] {err}"))
 
         # Tiêm mã độc vào lõi chặn JS Fetch
         js_interceptor = r"""
@@ -314,26 +320,19 @@ def scrape_and_push() -> None:
             print(f"⏳ [{index}/{len(valid_matches)}] {match['home']} vs {match['away']} ({match.get('timeStr')})")
 
             all_match_streams = []
-            
-            for href, blv_name in match["hrefs_and_blvs"]:
-                url_path = href.replace(TARGET_SITE, "") if href.startswith(TARGET_SITE) else href
-                slug = url_path.split("/")[-1].split("?")[0] # Bóc Slug sạch sẽ
-                
-                # 💡 An toàn 100%: Lùi lại trang chủ trước khi click trận tiếp theo
-                if TARGET_SITE not in page.url or len(page.url) > len(TARGET_SITE) + 5:
-                    page.goto(TARGET_SITE, wait_until="domcontentloaded")
-                    page.wait_for_timeout(1500)
-                
-                print(f"      > Đang Click ảo vào BLV: {blv_name}...")
-                flv_link = lay_flv_spa(page, url_path, slug, match['home'])
-                
+
+            for href_i, (href, blv_name) in enumerate(match["hrefs_and_blvs"]):
+                # href đã là URL tuyệt đối lấy sẵn từ JS_EXTRACT, dùng thẳng để goto
+                print(f"      > Đang vào phòng BLV: {blv_name}...")
+                flv_link = lay_flv_spa(page, href, index_label=f"{index}_{href_i}")
+
                 if flv_link:
                     all_match_streams.append({"name": blv_name, "url": flv_link})
                 else:
                     print("         ❌ Lục tung phòng xem không thấy link.")
-                    
-                # Load lại Trang chủ để reset Nuxt
-                try: 
+
+                # Load lại Trang chủ để reset trạng thái trước trận/BLV tiếp theo
+                try:
                     page.goto(TARGET_SITE, wait_until="domcontentloaded")
                     page.wait_for_timeout(1000)
                 except: pass
@@ -342,7 +341,7 @@ def scrape_and_push() -> None:
             display_name = f"⚽ {title_clean} | {match.get('tournament', '')} | {match.get('timeStr', '')}"
             cid = make_id(match["href"])
             has_stream = len(all_match_streams) > 0
-            
+
             if has_stream:
                 label_text = f"● Live {match.get('scoreStr','')}".strip()
                 label_color = "#ff0000"

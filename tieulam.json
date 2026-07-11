@@ -1,14 +1,59 @@
 {
   "id": "cakhia",
   "name": "Cà Khịa TV",
-  "last_updated": "20:37 11/07/2026",
+  "last_updated": "20:45 11/07/2026",
   "groups": [
     {
       "id": "live",
       "name": "🔴 Live bóng đá Cà Khịa",
       "channels": [
         {
-          "id": "cakhia-04f32163c1d2",
+          "id": "cakhia-c2e954697b11",
+          "name": "⚽ Fredrikstad vs Lillestrom | NORWEGIAN ELITESERIEN | 19:00 11/07",
+          "tournament": "NORWEGIAN ELITESERIEN",
+          "logo_nha": "https://img.url-api-ck.com/football/team/cfbe053bbd9502769f61b889786ace2c.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/f46fa570a21dc0f62e327d211a98ebaa.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/cfbe053bbd9502769f61b889786ace2c.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "Hiệp 2: 84 '",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff6600"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-c2e954697b11",
+              "name": "Cà Khịa TV",
+              "contents": [
+                {
+                  "id": "cakhia-c2e954697b11",
+                  "name": "Fredrikstad vs Lillestrom",
+                  "streams": [
+                    {
+                      "id": "cakhia-c2e954697b11",
+                      "name": "F",
+                      "stream_links": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cakhia-9d4cd275588e",
           "name": "⚽ FC Zhetysu Taldykorgan vs Altay FK | KAZAKHSTAN PREMIER LEAGUE | 20:00 11/07",
           "tournament": "KAZAKHSTAN PREMIER LEAGUE",
           "logo_nha": "https://img.url-api-ck.com/football/team/d170d88f6e60eeee57486405474e1f9f.png",
@@ -26,7 +71,7 @@
           },
           "labels": [
             {
-              "text": "Hiệp 1: 38 '",
+              "text": "Hiệp 1: 45+ '",
               "position": "top-left",
               "color": "#00ffffff",
               "text_color": "#ff6600"
@@ -34,15 +79,15 @@
           ],
           "sources": [
             {
-              "id": "cakhia-04f32163c1d2",
+              "id": "cakhia-9d4cd275588e",
               "name": "Cà Khịa TV",
               "contents": [
                 {
-                  "id": "cakhia-04f32163c1d2",
+                  "id": "cakhia-9d4cd275588e",
                   "name": "FC Zhetysu Taldykorgan vs Altay FK",
                   "streams": [
                     {
-                      "id": "cakhia-04f32163c1d2",
+                      "id": "cakhia-9d4cd275588e",
                       "name": "F",
                       "stream_links": []
                     }
@@ -71,7 +116,7 @@
           },
           "labels": [
             {
-              "text": "Hiệp 2: 76 '",
+              "text": "Hiệp 2: 84 '",
               "position": "top-left",
               "color": "#00ffffff",
               "text_color": "#ff6600"
@@ -116,7 +161,7 @@
           },
           "labels": [
             {
-              "text": "Hiệp 2: 80 '",
+              "text": "Hiệp 2: 88 '",
               "position": "top-left",
               "color": "#00ffffff",
               "text_color": "#ff6600"
@@ -161,7 +206,7 @@
           },
           "labels": [
             {
-              "text": "Hiệp 2: 79 '",
+              "text": "Hiệp 2: 87 '",
               "position": "top-left",
               "color": "#00ffffff",
               "text_color": "#ff6600"
@@ -206,7 +251,7 @@
           },
           "labels": [
             {
-              "text": "Hiệp 2: 78 '",
+              "text": "Hiệp 2: 86 '",
               "position": "top-left",
               "color": "#00ffffff",
               "text_color": "#ff6600"
@@ -223,51 +268,6 @@
                   "streams": [
                     {
                       "id": "cakhia-fb75ebb083b6",
-                      "name": "F",
-                      "stream_links": []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "cakhia-c2e954697b11",
-          "name": "⚽ Fredrikstad vs Lillestrom | NORWEGIAN ELITESERIEN | 19:00 11/07",
-          "tournament": "NORWEGIAN ELITESERIEN",
-          "logo_nha": "https://img.url-api-ck.com/football/team/cfbe053bbd9502769f61b889786ace2c.png",
-          "logo_khach": "https://img.url-api-ck.com/football/team/f46fa570a21dc0f62e327d211a98ebaa.png",
-          "type": "single",
-          "display": "thumbnail-only",
-          "enable_detail": false,
-          "image": {
-            "padding": 1,
-            "background_color": "#ececec",
-            "display": "contain",
-            "url": "https://img.url-api-ck.com/football/team/cfbe053bbd9502769f61b889786ace2c.png",
-            "width": 1600,
-            "height": 1200
-          },
-          "labels": [
-            {
-              "text": "Hiệp 2: 76 '",
-              "position": "top-left",
-              "color": "#00ffffff",
-              "text_color": "#ff6600"
-            }
-          ],
-          "sources": [
-            {
-              "id": "cakhia-c2e954697b11",
-              "name": "Cà Khịa TV",
-              "contents": [
-                {
-                  "id": "cakhia-c2e954697b11",
-                  "name": "Fredrikstad vs Lillestrom",
-                  "streams": [
-                    {
-                      "id": "cakhia-c2e954697b11",
                       "name": "F",
                       "stream_links": []
                     }

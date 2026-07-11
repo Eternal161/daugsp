@@ -1,0 +1,331 @@
+{
+  "id": "cakhia",
+  "name": "Cà Khịa TV",
+  "last_updated": "20:04 11/07/2026",
+  "groups": [
+    {
+      "id": "live",
+      "name": "🔴 Live bóng đá",
+      "channels": [
+        {
+          "id": "cakhia-82189afc7ec8",
+          "name": "⚽ China U17 vs Nigeria U17 | CFA TEAM CHINA INTERNATIONAL TOURNAMENT | 18:35 11/07",
+          "tournament": "CFA TEAM CHINA INTERNATIONAL TOURNAMENT",
+          "logo_nha": "https://img.url-api-ck.com/football/team/56b46dcd3e801a496ca783ab0bd0f44d.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/cee66bb4aeb11e661409e9f0705b4ca8.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/56b46dcd3e801a496ca783ab0bd0f44d.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live 18:35",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-82189afc7ec8",
+              "name": "Cà Khịa",
+              "contents": [
+                {
+                  "id": "cakhia-82189afc7ec8",
+                  "name": "China U17 vs Nigeria U17",
+                  "streams": [
+                    {
+                      "id": "cakhia-82189afc7ec8",
+                      "name": "F",
+                      "stream_links": [
+                        {
+                          "id": "lnk-65f71c3163",
+                          "name": "HT 1 - 1 6 - 3 0 - 1",
+                          "type": "flv",
+                          "default": true,
+                          "url": "https://flv.cdnfaster-b.site/live/GIANGATAO.flv?expire=1874838840&sign=3ff7ee43fdfe75b9b329877925272718\\"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cakhia-b109255b0bef",
+          "name": "⚽ CA Juventud vs Montevideo City Torque | URUGUAY PRIMERA DIVISION | 20:00 11/07",
+          "tournament": "URUGUAY PRIMERA DIVISION",
+          "logo_nha": "https://img.url-api-ck.com/football/team/928b41b8c6f948cf8b1f515d4b301b80.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/bb5004650a388d73f47cc3ca08623cc8.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/928b41b8c6f948cf8b1f515d4b301b80.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live 20:00",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-b109255b0bef",
+              "name": "Cà Khịa",
+              "contents": [
+                {
+                  "id": "cakhia-b109255b0bef",
+                  "name": "CA Juventud vs Montevideo City Torque",
+                  "streams": [
+                    {
+                      "id": "cakhia-b109255b0bef",
+                      "name": "F",
+                      "stream_links": [
+                        {
+                          "id": "lnk-f34f8f9d71",
+                          "name": "HT 0 - 0 0 - 0 0 - 0",
+                          "type": "flv",
+                          "default": true,
+                          "url": "https://flv.cdnfaster-b.site/live/PHONGVAN.flv?expire=1863524400&sign=2ea6d74fb4865fad42a1fb2c3b23b753\\"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cakhia-1e6724a19aa8",
+          "name": "⚽ Lahti vs HJK Helsinki | FINNISH VEIKKAUSLIIGA | 19:00 11/07",
+          "tournament": "FINNISH VEIKKAUSLIIGA",
+          "logo_nha": "https://img.url-api-ck.com/football/team/0ab1b8407086bab060a396f244a28cd6.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/fd1a9c51505300dec9c26e5847114851.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/0ab1b8407086bab060a396f244a28cd6.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live 19:00",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-1e6724a19aa8",
+              "name": "Cà Khịa",
+              "contents": [
+                {
+                  "id": "cakhia-1e6724a19aa8",
+                  "name": "Lahti vs HJK Helsinki",
+                  "streams": [
+                    {
+                      "id": "cakhia-1e6724a19aa8",
+                      "name": "F",
+                      "stream_links": [
+                        {
+                          "id": "lnk-75815e537d",
+                          "name": "HT 1 - 0 4 - 0 1 - 0",
+                          "type": "flv",
+                          "default": true,
+                          "url": "https://flv.cdnfaster-b.site/live/THICHDUTHU2.flv?expire=1879277700&sign=ba0e4935fa6e7962f084086e60fdee9e\\"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cakhia-b7400e1b3e25",
+          "name": "⚽ Chengdu Rongcheng vs Chongqing Tonglianglong | CHINESE FOOTBALL SUPER LEAGUE | 19:00 11/07",
+          "tournament": "CHINESE FOOTBALL SUPER LEAGUE",
+          "logo_nha": "https://img.url-api-ck.com/football/team/6ade4c9aaa615702eb7ec459e56d1968.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/5be93c1a6628d27de6d39fde9ea94b7a.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/6ade4c9aaa615702eb7ec459e56d1968.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live 19:00",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-b7400e1b3e25",
+              "name": "Cà Khịa",
+              "contents": [
+                {
+                  "id": "cakhia-b7400e1b3e25",
+                  "name": "Chengdu Rongcheng vs Chongqing Tonglianglong",
+                  "streams": [
+                    {
+                      "id": "cakhia-b7400e1b3e25",
+                      "name": "F",
+                      "stream_links": [
+                        {
+                          "id": "lnk-387eccebda",
+                          "name": "HT 1 - 0 4 - 0 1 - 1",
+                          "type": "flv",
+                          "default": true,
+                          "url": "https://flv.cdnfaster-b.site/live/GIANGALOB.flv?expire=1791880560&sign=ba6bf72efa78dc80ec8554ba5ecb31bd\\"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cakhia-21b41617e301",
+          "name": "⚽ Irtysh Pavlodar vs Zhenis Astana | KAZAKHSTAN PREMIER LEAGUE | 19:00 11/07",
+          "tournament": "KAZAKHSTAN PREMIER LEAGUE",
+          "logo_nha": "https://img.url-api-ck.com/football/team/97bfb8ef2c0abc2fd40185debc8dd497.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/16ccfd6042d1f791302c69eec646e081.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/97bfb8ef2c0abc2fd40185debc8dd497.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live 19:00",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-21b41617e301",
+              "name": "Cà Khịa",
+              "contents": [
+                {
+                  "id": "cakhia-21b41617e301",
+                  "name": "Irtysh Pavlodar vs Zhenis Astana",
+                  "streams": [
+                    {
+                      "id": "cakhia-21b41617e301",
+                      "name": "F",
+                      "stream_links": [
+                        {
+                          "id": "lnk-898d710f27",
+                          "name": "HT 0 - 0 0 - 4 1 - 0",
+                          "type": "flv",
+                          "default": true,
+                          "url": "https://flv.cdnfaster-b.site/live/TEOTEO.flv?expire=1813410540&sign=71d1ad098d165df5352a541a785a268a\\"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cakhia-fb75ebb083b6",
+          "name": "⚽ FC Ufa vs FC Leningradets | RUSSIAN FIRST LEAGUE | 19:00 11/07",
+          "tournament": "RUSSIAN FIRST LEAGUE",
+          "logo_nha": "https://img.url-api-ck.com/football/team/bed3e0e7e7677fc51f43b2e6b33dd040.png",
+          "logo_khach": "https://img.url-api-ck.com/football/team/c659930080be6bd5532387d5e097c16c.png",
+          "type": "single",
+          "display": "thumbnail-only",
+          "enable_detail": false,
+          "image": {
+            "padding": 1,
+            "background_color": "#ececec",
+            "display": "contain",
+            "url": "https://img.url-api-ck.com/football/team/bed3e0e7e7677fc51f43b2e6b33dd040.png",
+            "width": 1600,
+            "height": 1200
+          },
+          "labels": [
+            {
+              "text": "● Live 19:00",
+              "position": "top-left",
+              "color": "#00ffffff",
+              "text_color": "#ff0000"
+            }
+          ],
+          "sources": [
+            {
+              "id": "cakhia-fb75ebb083b6",
+              "name": "Cà Khịa",
+              "contents": [
+                {
+                  "id": "cakhia-fb75ebb083b6",
+                  "name": "FC Ufa vs FC Leningradets",
+                  "streams": [
+                    {
+                      "id": "cakhia-fb75ebb083b6",
+                      "name": "F",
+                      "stream_links": [
+                        {
+                          "id": "lnk-eb082ac2ff",
+                          "name": "HT 2 - 0 0 - 3 0 - 1",
+                          "type": "flv",
+                          "default": true,
+                          "url": "https://flv.cdnfaster-b.site/live/GIANGABAY.flv?expire=1839139740&sign=0386abc1f8ac44d77d90458199531caf\\"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

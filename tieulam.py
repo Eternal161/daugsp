@@ -7,11 +7,22 @@ import html
 import hashlib
 import datetime
 from urllib.parse import urljoin
-
 import requests
 from github import Github
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
-from playwright_stealth import Stealth
+
+def apply_stealth(page):
+    try:
+        from playwright_stealth import stealth_sync
+        stealth_sync(page)
+    except ImportError:
+        try:
+            from playwright_stealth import Stealth
+            Stealth().apply_stealth_sync(page)
+        except Exception:
+            pass
+    except Exception:
+        pass
 
 # =========================================================
 # CONFIG CÀ KHỊA TV - CÀO HTTP-FLV + GỘP TRẬN/BLV
